@@ -2,7 +2,7 @@
 ChatGPT & Google Bard Client Application.  
 It supports Windows 10 and later, as well as MacOS.  
 
-ChatGPT、Bard用のプロンプトエディター＆クライアントアプリです。Windows10以降、MacOSに対応。
+ChatGPT、Google Bard用のプロンプトエディター＆クライアントアプリです。Windows10以降、MacOSに対応。
   
 ## 機能:  
 
@@ -34,7 +34,6 @@ Save and load prompt templates. The history of sent messages is also automatical
 
 <img width="1144" alt="スクリーンショット 2023-05-27 10 32 38" src="https://github.com/Jun-Murakami/TmCGPTD-2.0/assets/126404131/01f09bbd-8252-4416-946f-a7d997843ad9">
 <img width="1260" src="https://user-images.githubusercontent.com/126404131/236693431-4da2e7bc-f9da-4048-829a-9f21d290a335.png">
-<img width="1260" alt="スクリーンショット 2023-05-07 04 33 07" src="https://user-images.githubusercontent.com/126404131/236644742-c991c12d-50af-47d2-ab03-66646700c927.png">
 
 [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia) is used for multi-platform support.
 
