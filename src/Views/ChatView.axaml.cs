@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using System;
-using AI_Prompt_Editor.ViewModels;
+using TmCGPTD.ViewModels;
 using System.IO;
 using Avalonia.Threading;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Text;
 using Avalonia.Interactivity;
 
-namespace AI_Prompt_Editor.Views
+namespace TmCGPTD.Views
 {
     public partial class ChatView : UserControl
     {
@@ -103,7 +103,7 @@ namespace AI_Prompt_Editor.Views
 
         private void FocusSearchBox(object sender, RoutedEventArgs e)
         {
-            if (VMLocator.MainViewModel.SelectedLeftPane == "Log Viewer")
+            if (VMLocator.MainViewModel.SelectedLeftPane == "API Chat")
             {
                 _searchBox.Focus();
             }

@@ -1,11 +1,11 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Xilium.CefGlue.Avalonia;
-using AI_Prompt_Editor.ViewModels;
+using TmCGPTD.ViewModels;
 using Avalonia.Interactivity;
 using Xilium.CefGlue.Common.Events;
 
-namespace AI_Prompt_Editor.Views
+namespace TmCGPTD.Views
 {
     public partial class WebChatBardView : UserControl
     {

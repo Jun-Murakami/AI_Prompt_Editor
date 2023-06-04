@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AI_Prompt_Editor
+namespace TmCGPTD
 {
     public class ChatList
     {

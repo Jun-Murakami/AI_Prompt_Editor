@@ -1,9 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Input;
-using AI_Prompt_Editor.ViewModels;
+using TmCGPTD.ViewModels;
 
-namespace AI_Prompt_Editor.Views
+namespace TmCGPTD.Views
 {
     public partial class EditorView : UserControl
     {

@@ -1,9 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using System;
-using AI_Prompt_Editor.ViewModels;
+using TmCGPTD.ViewModels;
 
-namespace AI_Prompt_Editor
+namespace TmCGPTD
 {
     public class ViewLocator : IDataTemplate
     {

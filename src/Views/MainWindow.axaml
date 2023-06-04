@@ -3,14 +3,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="AI_Prompt_Editor.Views.MainWindow"
+        x:Class="TmCGPTD.Views.MainWindow"
 		xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
 		RenderOptions.BitmapInterpolationMode="HighQuality"
 		xmlns:sty="using:FluentAvalonia.Styling"
 		xmlns:ui="using:FluentAvalonia.UI.Controls"
-		xmlns:local="using:AI_Prompt_Editor.Views"
-        Icon="/Assets/AI_Prompt_Editor.ico"
-        Title="AI_Prompt_Editor">
+		xmlns:local="using:TmCGPTD.Views"
+        Icon="/Assets/TmCGPTD.ico"
+        Title="TmCGPTD">
 	<dialogHost:DialogHost IsOpen="{Binding	ApiSettingIsOpened}"
 						   DialogMargin="16"
 							DisableOpeningAnimation="True"

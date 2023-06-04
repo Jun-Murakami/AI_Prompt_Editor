@@ -1,6 +1,6 @@
-﻿using AI_Prompt_Editor.ViewModels;
+﻿using TmCGPTD.ViewModels;
 
-namespace AI_Prompt_Editor
+namespace TmCGPTD
 {
     internal class VMLocator
     {

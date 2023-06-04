@@ -3,9 +3,9 @@ using Avalonia.Markup.Xaml;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Media.Animation;
 using System;
-using AI_Prompt_Editor.ViewModels;
+using TmCGPTD.ViewModels;
 
-namespace AI_Prompt_Editor.Views
+namespace TmCGPTD.Views
 {
     public partial class MainView : UserControl
     {
@@ -42,7 +42,7 @@ namespace AI_Prompt_Editor.Views
             rPane.SelectedIndex = 0;
 
             _rightPane.Navigate(typeof(EditorView));
-            _leftPane.Navigate(typeof(WebChatView));
+            _leftPane.Navigate(typeof(ChatView));
         }
 
 
@@ -67,15 +67,15 @@ namespace AI_Prompt_Editor.Views
             switch ((sender as ListBox).SelectedIndex)
             {
                 case 0:
-                    _leftPane.Navigate(typeof(WebChatView));
+                    _leftPane.Navigate(typeof(ChatView));
                     break;
 
                 case 1:
-                    _leftPane.Navigate(typeof(WebChatBardView), null, new SuppressNavigationTransitionInfo());
+                    _leftPane.Navigate(typeof(WebChatView), null, new SuppressNavigationTransitionInfo());
                     break;
 
                 case 2:
-                    _leftPane.Navigate(typeof(ChatView), null, new SuppressNavigationTransitionInfo());
+                    _leftPane.Navigate(typeof(WebChatBardView), null, new SuppressNavigationTransitionInfo());
                     break;
             }
         }

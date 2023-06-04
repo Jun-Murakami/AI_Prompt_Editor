@@ -3,8 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="980" d:DesignHeight="980"
-			 xmlns:local="using:AI_Prompt_Editor"
-             x:Class="AI_Prompt_Editor.Views.ApiSettingsView">
+			 xmlns:local="using:TmCGPTD"
+             x:Class="TmCGPTD.Views.ApiSettingsView">
 	<Grid Name="ApiSettings" Classes="ApiSettings" HorizontalAlignment="Stretch">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -41,7 +41,7 @@
 		<TextBlock Grid.Row="0" Grid.ColumnSpan="5" Text="API Parameters" HorizontalAlignment="Center" Margin="0,10,0,30"/>
 		
 		<TextBlock Grid.Row="1" Grid.Column="0" Text="model" TextAlignment="Right" />
-		<ComboBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{Binding ModelList}"  SelectedItem="{Binding ApiModel}"/>
+		<ComboBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Items="{Binding ModelList}"  SelectedItem="{Binding ApiModel}"/>
 
 		<TextBlock Grid.Row="2" Grid.Column="3" Text="Enable" Margin="8,0"/>
 		<TextBlock Grid.Row="2" Grid.Column="4" Text="Default" />
@@ -125,5 +125,7 @@
 		<Button Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="5" Content="Reset" HorizontalAlignment="Center" Margin="0,20,0,15" Width="100" Height="30" Command="{Binding ResetApiSettingsCommand}"/>
 
 		<Button Grid.Row="20" Grid.Column="0" Grid.ColumnSpan="5" Content="Close" HorizontalAlignment="Center" Margin="0,0,0,15" Width="200" Command="{Binding ClosingApiSettingsCommand}"/>
-    </Grid>
+
+
+   </Grid>
 </UserControl>

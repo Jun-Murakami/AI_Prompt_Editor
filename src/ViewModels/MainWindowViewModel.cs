@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 
-namespace AI_Prompt_Editor.ViewModels
+namespace TmCGPTD.ViewModels
 {
     public partial class MainWindowViewModel: ViewModelBase
     {

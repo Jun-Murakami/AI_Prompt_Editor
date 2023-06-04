@@ -2,7 +2,7 @@
 using System;
 using System.Globalization;
 
-namespace AI_Prompt_Editor
+namespace TmCGPTD
 {
     public class CustomDateConverter : IValueConverter
     {

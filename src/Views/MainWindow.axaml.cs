@@ -3,11 +3,11 @@ using Avalonia.Controls;
 using System.Text.Json;
 using System.IO;
 using System;
-using AI_Prompt_Editor.ViewModels;
+using TmCGPTD.ViewModels;
 using FluentAvalonia.UI.Controls;
 using Avalonia.Threading;
 using System.Threading.Tasks;
-using AI_Prompt_Editor.Models;
+using TmCGPTD.Models;
 using Avalonia.Interactivity;
 using System.Globalization;
 using Avalonia.Markup.Xaml.Styling;
@@ -15,7 +15,7 @@ using System.Linq;
 using Avalonia.Markup.Xaml;
 using System.Diagnostics;
 
-namespace AI_Prompt_Editor.Views
+namespace TmCGPTD.Views
 {
     public partial class MainWindow : Window
     {
@@ -29,8 +29,6 @@ namespace AI_Prompt_Editor.Views
             this.Closing += (sender, e) => SaveWindowSizeAndPosition();
 
             this.Loaded += MainWindow_Loaded;
-
-            this.Title = "AI Prompt Editor";
 
             DataContext = MainWindowViewModel;
             VMLocator.MainWindowViewModel = MainWindowViewModel;
@@ -80,7 +78,7 @@ namespace AI_Prompt_Editor.Views
 
             VMLocator.MainViewModel.SelectedPhraseItem = settings.PhrasePreset;
 
-            VMLocator.MainViewModel.SelectedLogPain = "Chat Log";
+            VMLocator.MainViewModel.SelectedLogPain = "Chat List";
 
             VMLocator.MainViewModel.PhraseExpanderIsOpened = settings.PhraseExpanderMode;
 
@@ -89,7 +87,6 @@ namespace AI_Prompt_Editor.Views
 
             VMLocator.EditorViewModel.EditorCommonFontSize = settings.EditorFontSize > 0 ? settings.EditorFontSize : 1;
             VMLocator.MainViewModel.SelectedPhraseItem = settings.PhrasePreset;
-            VMLocator.EditorViewModel.EditorModeIsChecked = true;
             
             VMLocator.MainWindowViewModel.ApiMaxTokens = settings.ApiMaxTokens;
             VMLocator.MainWindowViewModel.ApiTemperature = settings.ApiTemperature;
@@ -135,12 +132,17 @@ namespace AI_Prompt_Editor.Views
             _previousWidth = ClientSize.Width;
 
             VMLocator.DataGridViewModel.ChatList = await _dbProcess.SearchChatDatabaseAsync();
-            VMLocator.EditorViewModel.EditorModeIsChecked = settings.EditorMode;
             VMLocator.EditorViewModel.SelectedLangIndex = settings.SyntaxHighlighting;
 
             await _dbProcess.CleanUpEditorLogDatabaseAsync();
             VMLocator.EditorViewModel.SelectedEditorLogIndex = -1;
 
+            if (string.IsNullOrWhiteSpace(VMLocator.MainWindowViewModel.ApiKey))
+            {
+                var dialog = new ContentDialog() { Title = $"Please enter your API key.", PrimaryButtonText = "OK" };
+                await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
+                VMLocator.ChatViewModel.OpenApiSettings();
+            }
         }
 
         private void OnSizeChanged(Size newSize)
@@ -204,7 +206,6 @@ namespace AI_Prompt_Editor.Views
             settings.X = this.Position.X;
             settings.Y = this.Position.Y;
 
-            settings.EditorMode = VMLocator.EditorViewModel.EditorModeIsChecked;
             settings.EditorFontSize = VMLocator.EditorViewModel.EditorCommonFontSize;
             settings.PhrasePreset = VMLocator.MainViewModel.SelectedPhraseItem;
             settings.SyntaxHighlighting = VMLocator.EditorViewModel.SelectedLangIndex;
@@ -234,7 +235,7 @@ namespace AI_Prompt_Editor.Views
 
             App.Current.Resources.MergedDictionaries.Add(
                 (ResourceDictionary)AvaloniaXamlLoader.Load(
-                    new Uri($"avares://AI_Prompt_Editor/Assets/Lang/{targetLanguage}.axaml")
+                    new Uri($"avares://TmCGPTD/Assets/Lang/{targetLanguage}.axaml")
                     )
                 );
         }

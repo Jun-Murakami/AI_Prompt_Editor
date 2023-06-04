@@ -5,7 +5,7 @@ using System;
 using Avalonia.Controls.Primitives;
 using Avalonia;
 
-namespace AI_Prompt_Editor
+namespace TmCGPTD
 {
     public class CustomNumericUpDown : NumericUpDown, IStyleable
     {

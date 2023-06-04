@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace AI_Prompt_Editor.ViewModels
+namespace TmCGPTD.ViewModels
 {
     public class PhrasePresetsViewModel : ViewModelBase
     {

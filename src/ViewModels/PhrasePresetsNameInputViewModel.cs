@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAvalonia.UI.Controls;
 
-namespace AI_Prompt_Editor.ViewModels
+namespace TmCGPTD.ViewModels
 {
     public class PhrasePresetsNameInputViewModel : ViewModelBase
     {

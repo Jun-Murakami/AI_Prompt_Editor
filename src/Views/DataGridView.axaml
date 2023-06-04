@@ -2,15 +2,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:local="using:AI_Prompt_Editor"
+			 xmlns:local="using:TmCGPTD"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AI_Prompt_Editor.Views.DataGridView">
+             x:Class="TmCGPTD.Views.DataGridView">
 	<UserControl.Resources>
 		<local:CustomDateConverter x:Key="CustomDateConverter" />
 	</UserControl.Resources>
   <Grid>
 	  <DataGrid Name="ChatListDataGrid"
-				ItemsSource="{Binding ChatList}"
+				Items="{Binding ChatList}"
 				AutoGenerateColumns="False"
 				HeadersVisibility="None"
 				SelectionMode="Single"

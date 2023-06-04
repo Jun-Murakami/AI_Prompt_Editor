@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Xilium.CefGlue;
 using Xilium.CefGlue.Common.Handlers;
 
-namespace AI_Prompt_Editor
+namespace TmCGPTD
 {
     public class CustomLifeSpanHandler : Xilium.CefGlue.Common.Handlers.LifeSpanHandler
     {

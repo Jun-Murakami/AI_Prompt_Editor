@@ -10,10 +10,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using AI_Prompt_Editor.Views;
-using AI_Prompt_Editor.Models;
+using TmCGPTD.Views;
+using TmCGPTD.Models;
 
-namespace AI_Prompt_Editor.ViewModels
+namespace TmCGPTD.ViewModels
 {
     public class DatabaseSettingsViewModel : ViewModelBase
     {

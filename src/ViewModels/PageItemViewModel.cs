@@ -1,4 +1,4 @@
-namespace AI_Prompt_Editor.ViewModels
+namespace TmCGPTD.ViewModels
 {
     public class PreviewViewModel : ViewModelBase
     {

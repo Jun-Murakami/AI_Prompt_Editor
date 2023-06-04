@@ -8,14 +8,14 @@ using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using System.IO;
-using AI_Prompt_Editor.Views;
-using AI_Prompt_Editor.Models;
+using TmCGPTD.Views;
+using TmCGPTD.Models;
 using FluentAvalonia.UI.Controls;
 using Avalonia;
 using Avalonia.Platform.Storage;
 using System.Diagnostics;
 
-namespace AI_Prompt_Editor.ViewModels
+namespace TmCGPTD.ViewModels
 {
     public partial class MainViewModel : ViewModelBase
     {
@@ -94,11 +94,25 @@ namespace AI_Prompt_Editor.ViewModels
             }
         }
 
+        private string _searchKeyword;
+        public string SearchKeyword
+        {
+            get => _searchKeyword;
+            set => SetProperty(ref _searchKeyword, value);
+        }
+
         private bool _logPainIsOpened;
         public bool LogPainIsOpened
         {
             get => _logPainIsOpened;
             set => SetProperty(ref _logPainIsOpened, value);
+        }
+
+        private bool _logPainButtonIsVisible;
+        public bool LogPainButtonIsVisible
+        {
+            get => _logPainButtonIsVisible;
+            set => SetProperty(ref _logPainButtonIsVisible, value);
         }
 
         private UserControl _selectedLeftView;
@@ -117,9 +131,9 @@ namespace AI_Prompt_Editor.ViewModels
 
         public List<string> LeftPanes { get; } = new List<string>
         {
-            "ChatGPT",
-            "Bard",
-            "Log Viewer"
+            "API Chat",
+            "Web Chat",
+            "Bard"
         };
 
 
@@ -145,7 +159,7 @@ namespace AI_Prompt_Editor.ViewModels
 
         public List<string> LogPanes { get; } = new List<string>
         {
-            "Chat Log"
+            "Chat List"
         };
 
         private string _selectedLogPain;
@@ -190,20 +204,6 @@ namespace AI_Prompt_Editor.ViewModels
             set => SetProperty(ref _isCopyButtonClicked, value);
         }
 
-        private bool _logPainButtonIsVisible;
-        public bool LogPainButtonIsVisible
-        {
-            get => _logPainButtonIsVisible;
-            set => SetProperty(ref _logPainButtonIsVisible, value);
-        }
-
-        private string _searchKeyword;
-        public string SearchKeyword
-        {
-            get => _searchKeyword;
-            set => SetProperty(ref _searchKeyword, value);
-        }
-
 
         private async Task PostAsync()
         {
@@ -216,7 +216,7 @@ namespace AI_Prompt_Editor.ViewModels
             {
                 await _dbProcess.InserEditorLogDatabasetAsync();
 
-                if (SelectedLeftPane == "ChatGPT")
+                if (SelectedLeftPane == "Web Chat")
                 {
                     await VMLocator.WebChatViewModel.PostWebChat();
                 }
@@ -637,11 +637,11 @@ namespace AI_Prompt_Editor.ViewModels
             }
 
             IsCopyButtonClicked = true;
-            if (ApplicationExtensions.GetTopLevel(Avalonia.Application.Current!)!.Clipboard != null)
+            if (Avalonia.Application.Current.Clipboard != null)
             {
                 await _dbProcess.InserEditorLogDatabasetAsync();
 
-                await ApplicationExtensions.GetTopLevel(Avalonia.Application.Current!)!.Clipboard!.SetTextAsync(VMLocator.EditorViewModel.RecentText);
+                await Avalonia.Application.Current.Clipboard.SetTextAsync(VMLocator.EditorViewModel.RecentText);
 
                 await _dbProcess.GetEditorLogDatabaseAsync();
                 VMLocator.EditorViewModel.SelectedEditorLogIndex = -1;

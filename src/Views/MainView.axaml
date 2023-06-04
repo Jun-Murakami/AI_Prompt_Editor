@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ui="using:FluentAvalonia.UI.Controls"
 			 xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
-			 xmlns:local="using:AI_Prompt_Editor.Views"
+			 xmlns:local="using:TmCGPTD.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AI_Prompt_Editor.Views.MainView">
+             x:Class="TmCGPTD.Views.MainView">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
@@ -18,14 +18,14 @@
 					Orientation="Horizontal"
 					Margin="0,7,0,5"
 					HorizontalAlignment="Left">
-			<Image Source="/Assets/AI_Prompt_Editor2.png"
+			<Image Source="/Assets/TmCGPTD2.png"
 				   Height="17"
 				   Width="17"
 				   VerticalAlignment="Center"
 				   Margin="0,0,5,3"
 				   Name="WindowIcon"
 				   IsHitTestVisible="False"/>
-			<TextBlock Text="AI Prompt Editor"
+			<TextBlock Text="TmCGPT Debugger"
 					   Name="Title"
 					   IsHitTestVisible="False"/>
 		</StackPanel>
@@ -42,7 +42,7 @@
 						<RowDefinition Height="*"/>
 					</Grid.RowDefinitions>
 					<ListBox Grid.Row="0"
-							 ItemsSource="{Binding LogPanes}"
+							 Items="{Binding LogPanes}"
 							 SelectedItem="{Binding SelectedLogPain}">
 						<ListBox.ItemsPanel>
 							<ItemsPanelTemplate>
@@ -117,7 +117,7 @@
 				</Grid.ColumnDefinitions>
 				<ListBox Grid.Row="0" Grid.Column="0"
 							Name="LeftPaneList"
-							ItemsSource="{Binding LeftPanes}"
+							Items="{Binding LeftPanes}"
 							SelectedItem="{Binding SelectedLeftPane}">
 					<ListBox.ItemsPanel>
 						<ItemsPanelTemplate>
@@ -129,7 +129,7 @@
 				<GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="5"/>
 				<Grid Grid.Row="0" Grid.Column="2" >
 					<ListBox Name="RightPaneList"
-								ItemsSource="{Binding RightPanes}"
+								Items="{Binding RightPanes}"
 								SelectedItem="{Binding SelectedRightPane}">
 						<ListBox.ItemsPanel>
 							<ItemsPanelTemplate>
@@ -245,7 +245,7 @@
 						<TextBlock Text="{DynamicResource My.Strings.PhrasePresets}"
 									Margin="10,8,5,16"
 									VerticalAlignment="Bottom" />
-						<ComboBox ItemsSource="{Binding PhrasePresetsItems}"
+						<ComboBox Items="{Binding PhrasePresetsItems}"
 									SelectedItem="{Binding SelectedPhraseItem}"
 									Width="200"
 									VerticalAlignment="Bottom"

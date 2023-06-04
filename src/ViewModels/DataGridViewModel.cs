@@ -1,9 +1,9 @@
 using System.Text.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using AI_Prompt_Editor.Models;
+using TmCGPTD.Models;
 
-namespace AI_Prompt_Editor.ViewModels
+namespace TmCGPTD.ViewModels
 {
     public class DataGridViewModel : ViewModelBase
     {
@@ -61,9 +61,9 @@ namespace AI_Prompt_Editor.ViewModels
                 _chatViewModel.ConversationHistory = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(result[1]);
                 _chatViewModel.HtmlContent = await _htmlProcess.ConvertChatLogToHtml(result[2]);
 
-                if (VMLocator.MainViewModel.SelectedLeftPane != "Log Viewer")
+                if (VMLocator.MainViewModel.SelectedLeftPane == "Web Chat")
                 {
-                    VMLocator.MainViewModel.SelectedLeftPane = "Log Viewer";
+                    VMLocator.MainViewModel.SelectedLeftPane = "API Chat";
                 }
             }
         }

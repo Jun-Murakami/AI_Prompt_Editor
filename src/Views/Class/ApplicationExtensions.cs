@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia;
 using Avalonia.VisualTree;
 
-namespace AI_Prompt_Editor
+namespace TmCGPTD
 {
     public static class ApplicationExtensions
     {

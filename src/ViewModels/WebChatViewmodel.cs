@@ -4,9 +4,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Xilium.CefGlue.Avalonia;
 using FluentAvalonia.UI.Controls;
-using AI_Prompt_Editor.Models;
+using TmCGPTD.Models;
 
-namespace AI_Prompt_Editor.ViewModels
+namespace TmCGPTD.ViewModels
 {
     public class WebChatViewModel : ViewModelBase
     {

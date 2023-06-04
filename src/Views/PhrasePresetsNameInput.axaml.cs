@@ -4,7 +4,7 @@ using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 
-namespace AI_Prompt_Editor.Views
+namespace TmCGPTD.Views
 {
     public partial class PhrasePresetsNameInput : UserControl
     {
@@ -25,7 +25,8 @@ namespace AI_Prompt_Editor.Views
             {
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    inputElement.Focus();
+                    KeyboardDevice.Instance.SetFocusedElement(inputElement, NavigationMethod.Unspecified,
+                        KeyModifiers.None);
                 });
             }
         }
