@@ -1,0 +1,89 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <OutputType>WinExe</OutputType>
+	  <SelfContained>true</SelfContained>
+	  <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
+	  <Nullable>enable</Nullable>
+	  <UseAppHost>true</UseAppHost>
+	  <ApplicationManifest>app.manifest</ApplicationManifest>
+	  <ApplicationIcon>TmCGPTD.ico</ApplicationIcon>
+	  
+	  <NSPrincipalClass>NSApplication</NSPrincipalClass>
+	  <NSHighResolutionCapable>true</NSHighResolutionCapable>
+	  <Configurations>Debug;Release;Debug64</Configurations>
+	  <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+	</PropertyGroup>
+
+	<ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <AvaloniaXaml Remove="Helper\**" />
+    <Compile Remove="Helper\**" />
+    <EmbeddedResource Remove="Helper\**" />
+    <None Remove="Helper\**" />
+    <AvaloniaResource Remove="Assets\CustomDataGridStyles.axaml" />
+    <AvaloniaResource Include="Assets\Styles.axaml" />
+    <None Remove=".gitignore" />
+    <None Remove="Assets\AI_Prompt_Editor.ico" />
+    <None Remove="Assets\TmCGPTD.ico" />
+    <None Remove="src\Views\WebChatBardView.xaml" />
+    <None Remove="src\Views\WebChatView.xaml" />
+    <AvaloniaResource Include="Assets\Lato-Regular.ttf" />
+    <AvaloniaResource Include="Assets\iconClip.png" />
+    <AvaloniaResource Include="Assets\iconWrite.png" />
+    <AvaloniaResource Include="Assets\migu-1m-regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Include="src\Views\WebChatBardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+    <AvaloniaXaml Include="src\Views\WebChatView.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TmCGPTD.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TrimmerRootDescriptor Include="Roots.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.0-preview8-fork4" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.0-preview8" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview8-fork4" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview8-fork4" />
+    <PackageReference Include="Avalonia.Diagnostics" Condition="'$(Configuration)'=='Debug64'">
+      <Version>11.0.0-preview8</Version>
+    </PackageReference>
+    <PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.0.0-preview8" />
+    <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.0-preview8" />
+    <PackageReference Include="CefGlue.Avalonia" Version="106.5249.7-avalonia11" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0-preview2" />
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="DialogHost.Avalonia" Version="0.7.3" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.0.0-preview8" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.117" />
+    <PackageReference Include="TiktokenSharp" Version="1.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Update="Assets\CustomDataGridStyles.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="src\Views\HotKeyDisplayView.axaml.cs">
+      <DependentUpon>HotKeyDisplayView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>
