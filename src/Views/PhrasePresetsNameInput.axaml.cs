@@ -4,7 +4,7 @@ using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 
-namespace TmCGPTD.Views
+namespace AI_Prompt_Editor.Views
 {
     public partial class PhrasePresetsNameInput : UserControl
     {

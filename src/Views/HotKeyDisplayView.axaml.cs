@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace TmCGPTD.Views
+namespace AI_Prompt_Editor.Views
 {
     public partial class HotKeyDisplayView : UserControl
     {

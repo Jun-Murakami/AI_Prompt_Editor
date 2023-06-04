@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using System;
-using TmCGPTD.ViewModels;
+using AI_Prompt_Editor.ViewModels;
 using System.IO;
 using Avalonia.Threading;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Text;
 using Avalonia.Interactivity;
 
-namespace TmCGPTD.Views
+namespace AI_Prompt_Editor.Views
 {
     public partial class ChatView : UserControl
     {

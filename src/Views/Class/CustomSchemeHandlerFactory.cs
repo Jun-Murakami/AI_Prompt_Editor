@@ -1,6 +1,6 @@
 using Xilium.CefGlue;
 
-namespace TmCGPTD
+namespace AI_Prompt_Editor
 {
     class CustomSchemeHandler : CefSchemeHandlerFactory
     {

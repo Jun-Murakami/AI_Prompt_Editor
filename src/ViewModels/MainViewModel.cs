@@ -8,14 +8,14 @@ using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using System.IO;
-using TmCGPTD.Views;
-using TmCGPTD.Models;
+using AI_Prompt_Editor.Views;
+using AI_Prompt_Editor.Models;
 using FluentAvalonia.UI.Controls;
 using Avalonia;
 using Avalonia.Platform.Storage;
 using System.Diagnostics;
 
-namespace TmCGPTD.ViewModels
+namespace AI_Prompt_Editor.ViewModels
 {
     public partial class MainViewModel : ViewModelBase
     {

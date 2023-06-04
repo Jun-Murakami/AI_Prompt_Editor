@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace TmCGPTD.ViewModels
+namespace AI_Prompt_Editor.ViewModels
 {
     public class ViewModelBase : ObservableObject
     {

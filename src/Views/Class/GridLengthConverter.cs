@@ -3,7 +3,7 @@ using System;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 
-namespace TmCGPTD
+namespace AI_Prompt_Editor
 {
     public class GridLengthConverter : JsonConverter<GridLength>
     {

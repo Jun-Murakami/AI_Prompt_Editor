@@ -3,9 +3,9 @@ using Avalonia.Markup.Xaml;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Media.Animation;
 using System;
-using TmCGPTD.ViewModels;
+using AI_Prompt_Editor.ViewModels;
 
-namespace TmCGPTD.Views
+namespace AI_Prompt_Editor.Views
 {
     public partial class MainView : UserControl
     {

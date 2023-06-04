@@ -2,9 +2,9 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using System;
-using TmCGPTD.ViewModels;
+using AI_Prompt_Editor.ViewModels;
 
-namespace TmCGPTD.Views
+namespace AI_Prompt_Editor.Views
 {
     public partial class PhrasePresetsView : UserControl
     {

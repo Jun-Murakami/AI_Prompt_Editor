@@ -1,4 +1,4 @@
-﻿namespace TmCGPTD
+﻿namespace AI_Prompt_Editor
 {
     public class EditorLogs
     {

@@ -3,9 +3,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		xmlns:views="clr-namespace:TmCGPTD.Views"
-		xmlns:behaviors="clr-namespace:TmCGPTD.Behaviors;assembly=TmCGPTD"
-        x:Class="TmCGPTD.Views.ChatView">
+		xmlns:views="clr-namespace:AI_Prompt_Editor.Views"
+		xmlns:behaviors="clr-namespace:AI_Prompt_Editor.Behaviors;assembly=AI_Prompt_Editor"
+        x:Class="AI_Prompt_Editor.Views.ChatView">
 	<Grid VerticalAlignment="Stretch" >
 		<Grid.RowDefinitions>
 			<RowDefinition Height="50" />

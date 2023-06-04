@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace TmCGPTD
+namespace AI_Prompt_Editor
 {
     public class AppSettings
     {
@@ -117,7 +117,7 @@ namespace TmCGPTD
 
         private string GetAppDataDirectory()
         {
-            string appDataPath = Path.Combine( Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TmCGPTD" );
+            string appDataPath = Path.Combine( Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AI_Prompt_Editor" );
             if (!Directory.Exists(appDataPath))
             {
                 Directory.CreateDirectory(appDataPath);

@@ -6,12 +6,12 @@ using CommunityToolkit.Mvvm.Input;
 using FluentAvalonia.UI.Controls;
 using Xilium.CefGlue.Avalonia;
 using Avalonia.Controls;
-using TmCGPTD.Models;
+using AI_Prompt_Editor.Models;
 using System.Text.Json;
 using System.Diagnostics;
 using Avalonia.Threading;
 
-namespace TmCGPTD.ViewModels
+namespace AI_Prompt_Editor.ViewModels
 {
     public class ChatViewModel : ViewModelBase
     {

@@ -4,8 +4,8 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using TmCGPTD.Views;
-using TmCGPTD.Models;
+using AI_Prompt_Editor.Views;
+using AI_Prompt_Editor.Models;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using FluentAvalonia.UI.Controls;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 
-namespace TmCGPTD.ViewModels
+namespace AI_Prompt_Editor.ViewModels
 {
     public class EditorViewModel : ViewModelBase
     {

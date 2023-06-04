@@ -1,12 +1,12 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Xilium.CefGlue.Avalonia;
-using TmCGPTD.ViewModels;
+using AI_Prompt_Editor.ViewModels;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Xilium.CefGlue.Common.Events;
 
-namespace TmCGPTD.Views
+namespace AI_Prompt_Editor.Views
 {
     public partial class WebChatView : UserControl
     {

@@ -3,11 +3,11 @@ using Avalonia.Controls;
 using System.Text.Json;
 using System.IO;
 using System;
-using TmCGPTD.ViewModels;
+using AI_Prompt_Editor.ViewModels;
 using FluentAvalonia.UI.Controls;
 using Avalonia.Threading;
 using System.Threading.Tasks;
-using TmCGPTD.Models;
+using AI_Prompt_Editor.Models;
 using Avalonia.Interactivity;
 using System.Globalization;
 using Avalonia.Markup.Xaml.Styling;
@@ -15,7 +15,7 @@ using System.Linq;
 using Avalonia.Markup.Xaml;
 using System.Diagnostics;
 
-namespace TmCGPTD.Views
+namespace AI_Prompt_Editor.Views
 {
     public partial class MainWindow : Window
     {
@@ -235,7 +235,7 @@ namespace TmCGPTD.Views
 
             App.Current.Resources.MergedDictionaries.Add(
                 (ResourceDictionary)AvaloniaXamlLoader.Load(
-                    new Uri($"avares://TmCGPTD/Assets/Lang/{targetLanguage}.axaml")
+                    new Uri($"avares://AI_Prompt_Editor/Assets/Lang/{targetLanguage}.axaml")
                     )
                 );
         }

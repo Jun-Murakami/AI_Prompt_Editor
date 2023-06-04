@@ -1,9 +1,9 @@
 using System.Text.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using TmCGPTD.Models;
+using AI_Prompt_Editor.Models;
 
-namespace TmCGPTD.ViewModels
+namespace AI_Prompt_Editor.ViewModels
 {
     public class DataGridViewModel : ViewModelBase
     {

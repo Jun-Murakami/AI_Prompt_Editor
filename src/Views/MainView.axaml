@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ui="using:FluentAvalonia.UI.Controls"
 			 xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
-			 xmlns:local="using:TmCGPTD.Views"
+			 xmlns:local="using:AI_Prompt_Editor.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="TmCGPTD.Views.MainView">
+             x:Class="AI_Prompt_Editor.Views.MainView">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
@@ -18,7 +18,7 @@
 					Orientation="Horizontal"
 					Margin="0,7,0,5"
 					HorizontalAlignment="Left">
-			<Image Source="/Assets/TmCGPTD2.png"
+			<Image Source="/Assets/AI_Prompt_Editor2.png"
 				   Height="17"
 				   Width="17"
 				   VerticalAlignment="Center"

@@ -12,11 +12,11 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using TmCGPTD.ViewModels;
-using TmCGPTD.Views;
+using AI_Prompt_Editor.ViewModels;
+using AI_Prompt_Editor.Views;
 using System.Reflection;
 
-namespace TmCGPTD.Models
+namespace AI_Prompt_Editor.Models
 {
     public class DatabaseProcess
     {
