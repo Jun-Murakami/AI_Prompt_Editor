@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/AI_Prompt_Editor.icns
+/AI_Prompt_Editor.ico
