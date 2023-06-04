@@ -32,7 +32,7 @@ You can register frequently used phrases and insert them into the editor.
 - **Prompt template & history**  
 Save and load prompt templates. The history of sent messages is also automatically stored.
 
-<img width="1144" alt="スクリーンショット 2023-05-27 10 32 38" src="https://github.com/Jun-Murakami/TmCGPTD-2.0/assets/126404131/01f09bbd-8252-4416-946f-a7d997843ad9">
+<img width="1144" alt="スクリーンショット 2023-05-27 10 32 38" src="https://github.com/Jun-Murakami/AI_Prompt_Editor/assets/126404131/fa22c67b-7535-4e32-bbff-7a11b6792408">
 <img width="1144" alt="スクリーンショット 2023-05-27 10 32 38" src="https://github.com/Jun-Murakami/AI_Prompt_Editor/assets/126404131/99a726b5-f0b7-44ac-aef1-31a91f5891cf">
 
 [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia) is used for multi-platform support.
