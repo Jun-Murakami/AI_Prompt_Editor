@@ -131,9 +131,9 @@ namespace AI_Prompt_Editor.ViewModels
 
         public List<string> LeftPanes { get; } = new List<string>
         {
-            "API Chat",
-            "Web Chat",
-            "Bard"
+            "ChatGPT",
+            "Bard",
+            "Log Viewer"
         };
 
 
@@ -159,7 +159,7 @@ namespace AI_Prompt_Editor.ViewModels
 
         public List<string> LogPanes { get; } = new List<string>
         {
-            "Chat List"
+            "Chat Log"
         };
 
         private string _selectedLogPain;
@@ -216,7 +216,7 @@ namespace AI_Prompt_Editor.ViewModels
             {
                 await _dbProcess.InserEditorLogDatabasetAsync();
 
-                if (SelectedLeftPane == "Web Chat")
+                if (SelectedLeftPane == "ChatGPT")
                 {
                     await VMLocator.WebChatViewModel.PostWebChat();
                 }

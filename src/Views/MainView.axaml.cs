@@ -42,7 +42,7 @@ namespace AI_Prompt_Editor.Views
             rPane.SelectedIndex = 0;
 
             _rightPane.Navigate(typeof(EditorView));
-            _leftPane.Navigate(typeof(ChatView));
+            _leftPane.Navigate(typeof(WebChatView));
         }
 
 
@@ -67,15 +67,15 @@ namespace AI_Prompt_Editor.Views
             switch ((sender as ListBox).SelectedIndex)
             {
                 case 0:
-                    _leftPane.Navigate(typeof(ChatView));
+                    _leftPane.Navigate(typeof(WebChatView));
                     break;
 
                 case 1:
-                    _leftPane.Navigate(typeof(WebChatView), null, new SuppressNavigationTransitionInfo());
+                    _leftPane.Navigate(typeof(WebChatBardView), null, new SuppressNavigationTransitionInfo());
                     break;
 
                 case 2:
-                    _leftPane.Navigate(typeof(WebChatBardView), null, new SuppressNavigationTransitionInfo());
+                    _leftPane.Navigate(typeof(ChatView), null, new SuppressNavigationTransitionInfo());
                     break;
             }
         }

@@ -30,6 +30,8 @@ namespace AI_Prompt_Editor.Views
 
             this.Loaded += MainWindow_Loaded;
 
+            this.Title = "AI Prompt Editor";
+
             DataContext = MainWindowViewModel;
             VMLocator.MainWindowViewModel = MainWindowViewModel;
 
@@ -78,7 +80,7 @@ namespace AI_Prompt_Editor.Views
 
             VMLocator.MainViewModel.SelectedPhraseItem = settings.PhrasePreset;
 
-            VMLocator.MainViewModel.SelectedLogPain = "Chat List";
+            VMLocator.MainViewModel.SelectedLogPain = "Chat Log";
 
             VMLocator.MainViewModel.PhraseExpanderIsOpened = settings.PhraseExpanderMode;
 
@@ -137,12 +139,6 @@ namespace AI_Prompt_Editor.Views
             await _dbProcess.CleanUpEditorLogDatabaseAsync();
             VMLocator.EditorViewModel.SelectedEditorLogIndex = -1;
 
-            if (string.IsNullOrWhiteSpace(VMLocator.MainWindowViewModel.ApiKey))
-            {
-                var dialog = new ContentDialog() { Title = $"Please enter your API key.", PrimaryButtonText = "OK" };
-                await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
-                VMLocator.ChatViewModel.OpenApiSettings();
-            }
         }
 
         private void OnSizeChanged(Size newSize)

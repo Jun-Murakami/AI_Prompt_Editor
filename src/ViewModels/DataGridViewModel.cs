@@ -61,9 +61,9 @@ namespace AI_Prompt_Editor.ViewModels
                 _chatViewModel.ConversationHistory = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(result[1]);
                 _chatViewModel.HtmlContent = await _htmlProcess.ConvertChatLogToHtml(result[2]);
 
-                if (VMLocator.MainViewModel.SelectedLeftPane == "Web Chat")
+                if (VMLocator.MainViewModel.SelectedLeftPane != "Log Viewer")
                 {
-                    VMLocator.MainViewModel.SelectedLeftPane = "API Chat";
+                    VMLocator.MainViewModel.SelectedLeftPane = "Log Viewer";
                 }
             }
         }

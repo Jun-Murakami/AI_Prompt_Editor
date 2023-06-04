@@ -39,7 +39,7 @@ namespace AI_Prompt_Editor.Views
 
         private void FocusSearchBox(object sender, RoutedEventArgs e)
         {
-            if (VMLocator.MainViewModel.SelectedLeftPane == "Web Chat")
+            if (VMLocator.MainViewModel.SelectedLeftPane == "ChatGPT")
             {
                 _searchBox.Focus();
             }

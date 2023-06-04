@@ -23,9 +23,9 @@
 				</Grid.ColumnDefinitions>
 				<Grid Grid.Column="0" VerticalAlignment="Center" Margin="5,0,0,0">
 					<ToggleButton Classes="ImageButton"
-								  ToolTip.Tip="Open / Close chat list"
+								  ToolTip.Tip="Open / Close chat log"
 								  VerticalAlignment="Center"
-								  IsChecked="{Binding Source={StaticResource VMLocator}, Path=MainViewModel.LogPainIsOpened}"
+								  IsChecked="{Binding Source={StaticResource VMLocator}, Path=MainViewModel.LogPainIsOpened,Mode=TwoWay}"
 								  IsVisible="{Binding Source={StaticResource VMLocator}, Path=MainViewModel.LogPainButtonIsVisible}">
 						<Image Classes="ButtonIcon"
 							   Source="/Assets/iconArrow.png"
@@ -36,7 +36,7 @@
 				</Grid>
 				<Grid Grid.Column="1" VerticalAlignment="Center" Margin="2,0,0,0">
 					<Button Content="Import"
-							ToolTip.Tip="Import Web Chat Log to API Chat"
+							ToolTip.Tip="Import ChatGPT Log"
 							VerticalAlignment="Center"
 							HorizontalAlignment="Right"
 							Width="130"
