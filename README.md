@@ -33,7 +33,7 @@ You can register frequently used phrases and insert them into the editor.
 Save and load prompt templates. The history of sent messages is also automatically stored.
 
 <img width="1144" alt="スクリーンショット 2023-05-27 10 32 38" src="https://github.com/Jun-Murakami/TmCGPTD-2.0/assets/126404131/01f09bbd-8252-4416-946f-a7d997843ad9">
-<img width="1260" src="https://user-images.githubusercontent.com/126404131/236693431-4da2e7bc-f9da-4048-829a-9f21d290a335.png">
+<img width="1260" src="https://github-production-user-asset-6210df.s3.amazonaws.com/126404131/243197959-57a498c5-f66b-4624-9c0b-9aa530e74c5b.png">
 
 [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia) is used for multi-platform support.
 
