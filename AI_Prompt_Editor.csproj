@@ -21,10 +21,6 @@
 
 	<ItemGroup>
     <AvaloniaResource Include="Assets\**" />
-    <AvaloniaXaml Remove="Helper\**" />
-    <Compile Remove="Helper\**" />
-    <EmbeddedResource Remove="Helper\**" />
-    <None Remove="Helper\**" />
     <AvaloniaResource Remove="Assets\CustomDataGridStyles.axaml" />
     <AvaloniaResource Include="Assets\Styles.axaml" />
     <None Remove=".gitignore" />
