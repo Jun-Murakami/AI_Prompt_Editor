@@ -1,17 +1,17 @@
 # TmCGPT Debugger
-ChatGPT API Client Application.  
+ChatGPT & Google Bard Client Application.  
 It supports Windows 10 and later, as well as MacOS.  
 
-ChatGPT APIのクライアントアプリです。Windows10以降、MacOSに対応。
+ChatGPT、Bard用のプロンプトエディター＆クライアントアプリです。Windows10以降、MacOSに対応。
   
 ## 機能:  
 
 - **縦5分割のプロンプトエディタ**  
 文章を切り貼りして、長めの命令文／プロンプトを構成しやすいようになっています。送信時は自動的に結合されます。
-- **Webサービス版ログのインポート**  
-ChatGPTのアカウントでログインしてWebサービス版のログをインポートできます。チャットの長さが最大に達しているログでも、インポートした後は半永久的に会話が継続できます。（古い会話履歴を自動的に圧縮し、裏で保持する機能が備わっています。）取り込んだ全てのログに対してテキスト全文検索が出来ます。
-- **Webサービス版チャットとGoggle Bard対応**												
-内蔵のブラウザでそのままWeb版のチャットも使用できます。プロンプトエディタから直接文章を送信可能で、GoogleBardにも対応しています。
+- **Webブラウザ内臓**												
+内蔵のブラウザでチャットできます。プロンプトエディタから直接文章を送信可能で、GoogleBardにも対応しています。
+- **ログのインポート**  
+ChatGPTのログをインポートできます。取り込んだ全てのログに対してテキスト全文検索が出来ます。
 - **定型句プリセット機能**  
 よく使う定型句を登録しておいて、エディターに挿入できます。
 - **プロンプトテンプレート＆ログ**  
@@ -23,12 +23,14 @@ ChatGPTのアカウントでログインしてWebサービス版のログをイ�
   
 - **Vertical 5-split text editor**  
 Designed to make it easy to cut and paste text to configure prompts.
-- **Importing web service version logs**  
-You can log in with your ChatGPT account and import logs from the web service version. Even if the chat log has reached its maximum length, you can continue the conversation semi-permanently after importing.
+- **Built-in web browser**
+Chat directly within the built-in web browser. Send messages directly from the prompt editor and use ChatGPT on Google Bard.
+- **Importing logs**  
+Import logs from ChatGPT and conduct full-text searches across all imported logs.
 - **Preset phrase function**  
 You can register frequently used phrases and insert them into the editor.
-- **Prompt template & log**  
-Prompt templates can be saved and loaded. Automatically saves up to 200 entries of sent text history.
+- **Prompt template & history**  
+Save and load prompt templates. The history of sent messages is also automatically stored.
 
 <img width="1144" alt="スクリーンショット 2023-05-27 10 32 38" src="https://github.com/Jun-Murakami/TmCGPTD-2.0/assets/126404131/01f09bbd-8252-4416-946f-a7d997843ad9">
 <img width="1260" src="https://user-images.githubusercontent.com/126404131/236693431-4da2e7bc-f9da-4048-829a-9f21d290a335.png">

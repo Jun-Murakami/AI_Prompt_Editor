@@ -67,7 +67,7 @@ namespace AI_Prompt_Editor.Views
             switch ((sender as ListBox).SelectedIndex)
             {
                 case 0:
-                    _leftPane.Navigate(typeof(WebChatView), null, new SuppressNavigationTransitionInfo());
+                    _leftPane.Navigate(typeof(WebChatView));
                     break;
 
                 case 1:

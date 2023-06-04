@@ -7,7 +7,7 @@
 	  <Nullable>enable</Nullable>
 	  <UseAppHost>true</UseAppHost>
 	  <ApplicationManifest>app.manifest</ApplicationManifest>
-	  <ApplicationIcon>TmCGPTD.ico</ApplicationIcon>
+	  <ApplicationIcon>AI_Prompt_Editor.ico</ApplicationIcon>
 	  
 	  <NSPrincipalClass>NSApplication</NSPrincipalClass>
 	  <NSHighResolutionCapable>true</NSHighResolutionCapable>
@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="TmCGPTD.ico" />
+    <Content Include="AI_Prompt_Editor.ico" />
   </ItemGroup>
 
   <ItemGroup>
