@@ -1,4 +1,4 @@
-# TmCGPT Debugger
+# AI Prompt Editor
 ChatGPT & Google Bard Client Application.  
 It supports Windows 10 and later, as well as MacOS.  
 
