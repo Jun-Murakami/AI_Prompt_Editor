@@ -8,7 +8,7 @@ ChatGPT、Google Bard用のプロンプトエディター＆クライアント�
 
 - **縦5分割のプロンプトエディタ**  
 文章を切り貼りして、長めの命令文／プロンプトを構成しやすいようになっています。送信時は自動的に結合されます。
-- **Webブラウザ内臓**												
+- **Webブラウザ内臓**  
 内蔵のブラウザでチャットできます。プロンプトエディタから直接文章を送信可能で、GoogleBardにも対応しています。
 - **ログのインポート**  
 ChatGPTのログをインポートできます。取り込んだ全てのログに対してテキスト全文検索が出来ます。
@@ -19,7 +19,7 @@ ChatGPTのログをインポートできます。取り込んだ全てのログ�
 
 > 複数のコンピューターでチャットログを同期するには、画面右上のデータベースアイコンをクリックして、データベースファイルの保存場所をクラウドドライブ（Dropboxなど）に設定してください。
 
-### [APIバージョンはこちら](https://github.com/Jun-Murakami/TmCGPTD-2.0)
+API対応バージョンは[こちら](https://github.com/Jun-Murakami/TmCGPTD-2.0)
 
 ## Features:  
   
@@ -34,8 +34,8 @@ You can register frequently used phrases and insert them into the editor.
 - **Prompt template & history**  
 Save and load prompt templates. The history of sent messages is also automatically stored.
 
-<img width="1144" alt="スクリーンショット 2023-05-27 10 32 38" src="https://github.com/Jun-Murakami/AI_Prompt_Editor/assets/126404131/fa22c67b-7535-4e32-bbff-7a11b6792408">
-<img width="1144" alt="スクリーンショット 2023-05-27 10 32 38" src="https://github.com/Jun-Murakami/AI_Prompt_Editor/assets/126404131/99a726b5-f0b7-44ac-aef1-31a91f5891cf">
+<img width="1194" alt="スクリーンショット 2023-06-05 03 04 32" src="https://github.com/Jun-Murakami/AI_Prompt_Editor/assets/126404131/dbe7432e-67aa-4438-a1c1-fd19d0692117">
+<img width="1194" alt="スクリーンショット 2023-06-05 03 04 32" src="https://github.com/Jun-Murakami/AI_Prompt_Editor/assets/126404131/26234fc0-6447-4cf2-9761-ad979af6e726">
 
 [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia) is used for multi-platform support.
 
