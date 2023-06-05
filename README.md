@@ -19,7 +19,7 @@ ChatGPTのログをインポートできます。取り込んだ全てのログ�
 
 > 複数のコンピューターでチャットログを同期するには、画面右上のデータベースアイコンをクリックして、データベースファイルの保存場所をクラウドドライブ（Dropboxなど）に設定してください。
 
-### [APIバージョンはこちら](https://github.com/Jun-Murakami/TmCGPTD-2.0)
+API対応バージョンは[こちら](https://github.com/Jun-Murakami/TmCGPTD-2.0)
 
 ## Features:  
   
