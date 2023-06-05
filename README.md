@@ -9,9 +9,9 @@ ChatGPT、Google Bard用のプロンプトエディター＆クライアント�
 - **縦5分割のプロンプトエディタ**  
 文章を切り貼りして、長めの命令文／プロンプトを構成しやすいようになっています。送信時は自動的に結合されます。
 - **Webブラウザ内臓**  
-内蔵のブラウザでチャットできます。プロンプトエディタから直接文章を送信可能で、GoogleBardにも対応しています。
+内蔵のブラウザでチャットできます。プロンプトエディタから直接文章を送信可能です。
 - **ログのインポート**  
-ChatGPTのログをインポートできます。取り込んだ全てのログに対してテキスト全文検索が出来ます。
+ChatGPTとBardのログをインポートできます。取り込んだ全てのログに対してテキスト全文検索が出来ます。
 - **定型句プリセット機能**  
 よく使う定型句を登録しておいて、エディターに挿入できます。
 - **プロンプトテンプレート＆ログ**  
@@ -28,7 +28,7 @@ Designed to make it easy to cut and paste text to configure prompts.
 - **Built-in web browser**
 Chat directly within the built-in web browser. Send messages directly from the prompt editor and use ChatGPT on Google Bard.
 - **Importing logs**  
-Import logs from ChatGPT and conduct full-text searches across all imported logs.
+Import logs from ChatGPT/Bard and conduct full-text searches across all imported logs.
 - **Preset phrase function**  
 You can register frequently used phrases and insert them into the editor.
 - **Prompt template & history**  
