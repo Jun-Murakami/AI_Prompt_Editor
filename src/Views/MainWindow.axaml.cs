@@ -51,6 +51,7 @@ namespace AI_Prompt_Editor.Views
 
             if (File.Exists(Path.Combine(settings.AppDataPath, "settings.json")))
             {
+                this.Width = settings.Width-1;
                 this.Width = settings.Width;
                 this.Height = settings.Height;
                 this.Position = new PixelPoint(settings.X, settings.Y);
@@ -234,7 +235,7 @@ namespace AI_Prompt_Editor.Views
 
             App.Current.Resources.MergedDictionaries.Add(
                 (ResourceDictionary)AvaloniaXamlLoader.Load(
-                    new Uri($"avares://AI_Prompt_Editor/Assets/Lang/{targetLanguage}.axaml")
+                    new Uri($"avares://AI Prompt Editor/Assets/Lang/{targetLanguage}.axaml")
                     )
                 );
         }

@@ -60,7 +60,7 @@ namespace AI_Prompt_Editor.ViewModels
         public async Task ImportWebChatLog()
         {
             var htmlSource = await _browser.EvaluateJavaScript<string>("return document.documentElement.outerHTML;");
-            var msg = await _htmlProcess.GetWebChatLogAsync(htmlSource);
+            var msg = await _htmlProcess.GetWebChatLogBardAsync(htmlSource);
             if (msg == "Cancel")
             {
                 return;
