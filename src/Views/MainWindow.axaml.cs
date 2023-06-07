@@ -14,6 +14,7 @@ using Avalonia.Markup.Xaml.Styling;
 using System.Linq;
 using Avalonia.Markup.Xaml;
 using System.Diagnostics;
+using Avalonia.Input;
 
 namespace AI_Prompt_Editor.Views
 {
@@ -30,16 +31,43 @@ namespace AI_Prompt_Editor.Views
 
             this.Loaded += MainWindow_Loaded;
 
-            this.Title = "AI Prompt Editor";
-
             DataContext = MainWindowViewModel;
             VMLocator.MainWindowViewModel = MainWindowViewModel;
+
+            // キーイベントハンドラ
+            this.KeyDown += MainWindow_KeyDown;
+            this.KeyUp += MainWindow_KeyUp;
+
 
             // Get the current culture info
             var cultureInfo = CultureInfo.CurrentCulture;
             if(cultureInfo.Name == "ja-JP")
             {
                 Translate("ja-JP");
+            }
+        }
+
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftAlt || e.Key == Key.RightAlt)
+            {
+                VMLocator.PhrasePresetsViewModel.AltKeyIsDown = true;
+            }
+            else if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl)
+            {
+                VMLocator.PhrasePresetsViewModel.CtrlKeyIsDown = true;
+            }
+        }
+
+        private void MainWindow_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftAlt || e.Key == Key.RightAlt)
+            {
+                VMLocator.PhrasePresetsViewModel.AltKeyIsDown = false;
+            }
+            else if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl)
+            {
+                VMLocator.PhrasePresetsViewModel.CtrlKeyIsDown = false;
             }
         }
 
