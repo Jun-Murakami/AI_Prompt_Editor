@@ -20,6 +20,7 @@ namespace AI_Prompt_Editor.ViewModels
             ApiSettingIsOpened = false;
             VMLocator.ChatViewModel.ChatViewIsVisible = true;
             VMLocator.WebChatViewModel.WebChatViewIsVisible = true;
+            VMLocator.WebChatBardViewModel.WebChatBardViewIsVisible = true;
         }
 
         public ICommand ValidateTextInputCommand { get; }

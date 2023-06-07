@@ -51,7 +51,7 @@ namespace AI_Prompt_Editor.Views
 
             if (File.Exists(Path.Combine(settings.AppDataPath, "settings.json")))
             {
-                this.Width = settings.Width-1;
+                this.Width = settings.Width - 1;
                 this.Width = settings.Width;
                 this.Height = settings.Height;
                 this.Position = new PixelPoint(settings.X, settings.Y);
@@ -90,6 +90,7 @@ namespace AI_Prompt_Editor.Views
 
             VMLocator.EditorViewModel.EditorCommonFontSize = settings.EditorFontSize > 0 ? settings.EditorFontSize : 1;
             VMLocator.MainViewModel.SelectedPhraseItem = settings.PhrasePreset;
+            VMLocator.EditorViewModel.EditorModeIsChecked = true;
             
             VMLocator.MainWindowViewModel.ApiMaxTokens = settings.ApiMaxTokens;
             VMLocator.MainWindowViewModel.ApiTemperature = settings.ApiTemperature;
@@ -134,7 +135,10 @@ namespace AI_Prompt_Editor.Views
             this.GetObservable(ClientSizeProperty).Subscribe(size => OnSizeChanged(size));
             _previousWidth = ClientSize.Width;
 
+            await _dbProcess.UpdateChatLogDatabaseAsync();
+
             VMLocator.DataGridViewModel.ChatList = await _dbProcess.SearchChatDatabaseAsync();
+            VMLocator.EditorViewModel.EditorModeIsChecked = settings.EditorMode;
             VMLocator.EditorViewModel.SelectedLangIndex = settings.SyntaxHighlighting;
 
             await _dbProcess.CleanUpEditorLogDatabaseAsync();
@@ -203,6 +207,7 @@ namespace AI_Prompt_Editor.Views
             settings.X = this.Position.X;
             settings.Y = this.Position.Y;
 
+            settings.EditorMode = VMLocator.EditorViewModel.EditorModeIsChecked;
             settings.EditorFontSize = VMLocator.EditorViewModel.EditorCommonFontSize;
             settings.PhrasePreset = VMLocator.MainViewModel.SelectedPhraseItem;
             settings.SyntaxHighlighting = VMLocator.EditorViewModel.SelectedLangIndex;
