@@ -10,6 +10,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="50" />
 			<RowDefinition Height="*" />
+			<RowDefinition Height="50"/>
 		</Grid.RowDefinitions>
 		<Border Grid.Row="0" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" BorderThickness="1,1,1,0">
 			<Grid>
@@ -25,7 +26,7 @@
 					<ToggleButton Classes="ImageButton"
 								  ToolTip.Tip="Open / Close chat log"
 								  VerticalAlignment="Center"
-								  IsChecked="{Binding Source={StaticResource VMLocator}, Path=MainViewModel.LogPainIsOpened,Mode=TwoWay}"
+								  IsChecked="{Binding Source={StaticResource VMLocator}, Path=MainViewModel.LogPainIsOpened}"
 								  IsVisible="{Binding Source={StaticResource VMLocator}, Path=MainViewModel.LogPainButtonIsVisible}">
 						<Image Classes="ButtonIcon"
 							   Source="/Assets/iconArrow.png"
@@ -82,7 +83,7 @@
 							 Width="170"
 							 Classes.clearButton="True"
 							 Padding="30,7,0,7"
-							 Text="{Binding	Source={StaticResource VMLocator}, Path=MainViewModel.SearchKeyword, Mode=TwoWay}"/>
+							 Text="{Binding Source={StaticResource VMLocator}, Path=MainViewModel.SearchKeyword, Mode=TwoWay}"/>
 					<Image Source="/Assets/iconSearch.png"
 						   HorizontalAlignment="Left"
 						   VerticalAlignment="Center"
@@ -116,8 +117,76 @@
 				</Button>
 			</Grid>
 		</Border>
-		<Border Name="ChatBorder" Grid.Row="1" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" BorderThickness="1,1,1,1">
+		<Border Name="ChatBorder" Grid.Row="1" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" BorderThickness="1,1,1,0">
 			<Decorator x:Name="ChatBrowserWrapper" IsVisible="{Binding ChatViewIsVisible}" Focusable="False"/>
+		</Border>
+		<Border Grid.Row="2" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" BorderThickness="1">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<StackPanel Grid.Column="0"
+							VerticalAlignment="Center"
+							Orientation="Horizontal"
+							Spacing="10"
+							Margin="10,0,0,0">
+					<TextBlock Text="Category :"
+							   VerticalAlignment="Center" />
+					<TextBox Classes="NormalInput"
+							 Classes.clearButton="True"
+							 Text="{Binding	ChatCategory, Mode=TwoWay}"
+							 Width="200"
+							 Margin="-5,0,0,0"/>
+					<Button Name="ButtonWrite2"
+							Classes="ImageButton"
+							VerticalAlignment="Center"
+							Margin="-8,0,6,0"
+							Command="{Binding CategoryUpdateCommand}">
+						<Grid>
+							<Image Name="ButtonWriteImage2"
+								   Classes="ButtonIcon"
+								   Source="/Assets/iconWrite.png"
+								   VerticalAlignment="Center"
+								   IsHitTestVisible="False"
+								   Height="18"
+								   Width="18"/>
+							<Image Name="ButtonAnime1b"
+								   Source="/Assets/iconLoading.png"
+								   VerticalAlignment="Center"
+								   IsHitTestVisible="False"
+								   Height="18"
+								   Width="18"
+								   Opacity="0"/>
+							<Image Name="ButtonAnime2b"
+								   Source="/Assets/iconOk.png"
+								   VerticalAlignment="Center"
+								   IsHitTestVisible="False"
+								   Height="18"
+								   Width="18"
+								   Opacity="0"/>
+						</Grid>
+					</Button>
+				</StackPanel>
+				<Grid Grid.Column="1"/>
+				<Grid Grid.Column="2" >
+					<!--<Button Content="New Chat"
+							Height="38"
+							Width="136"
+							Margin="0,0,10,0"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Center"
+							Command="{Binding InitializeChatCommand}"/>
+					<Image Source="/Assets/iconChat.png"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Left"
+						   IsHitTestVisible="False"
+						   Height="16"
+						   Width="16"
+						   Margin="10,0,0,0" />-->
+				</Grid>
+			</Grid>
 		</Border>
 	</Grid>
 </UserControl>

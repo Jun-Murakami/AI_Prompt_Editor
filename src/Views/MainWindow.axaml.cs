@@ -51,7 +51,7 @@ namespace AI_Prompt_Editor.Views
 
             if (File.Exists(Path.Combine(settings.AppDataPath, "settings.json")))
             {
-                this.Width = settings.Width-1;
+                this.Width = settings.Width - 1;
                 this.Width = settings.Width;
                 this.Height = settings.Height;
                 this.Position = new PixelPoint(settings.X, settings.Y);
@@ -134,6 +134,8 @@ namespace AI_Prompt_Editor.Views
 
             this.GetObservable(ClientSizeProperty).Subscribe(size => OnSizeChanged(size));
             _previousWidth = ClientSize.Width;
+
+            await _dbProcess.UpdateChatLogDatabaseAsync();
 
             VMLocator.DataGridViewModel.ChatList = await _dbProcess.SearchChatDatabaseAsync();
             VMLocator.EditorViewModel.EditorModeIsChecked = settings.EditorMode;
