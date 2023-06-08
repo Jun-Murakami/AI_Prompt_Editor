@@ -2,11 +2,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:vm="clr-namespace:AI_Prompt_Editor.ViewModels"
-		xmlns:views="clr-namespace:AI_Prompt_Editor.Views"
+		xmlns:vm="clr-namespace:TmCGPTD.ViewModels"
+		xmlns:views="clr-namespace:TmCGPTD.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="AI_Prompt_Editor.Views.PreviewView">
+        x:Class="TmCGPTD.Views.PreviewView">
 	<Grid>
-		<TextBox Name="PreviewTextBox" Text="{Binding EditorViewModel.RecentText}" AcceptsReturn="True" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Stretch" />
+		<TextBox Name="PreviewTextBox" AcceptsReturn="True" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Stretch" />
 	</Grid>
 </UserControl>
