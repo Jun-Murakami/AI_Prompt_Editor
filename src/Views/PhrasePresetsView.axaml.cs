@@ -112,10 +112,6 @@ namespace AI_Prompt_Editor.Views
                     focusedTextBox.Text = focusedTextBox.Text.Insert(start, textBox.Text);
                     focusedTextBox.CaretIndex = start + textBox.Text.Length;
                 }
-                else if (focusedControl is AvaloniaEdit.Editing.TextArea focusedTextArea)
-                {
-                        focusedTextArea.Selection.ReplaceSelectionWithText(textBox.Text);
-                }
             }
         }
     }

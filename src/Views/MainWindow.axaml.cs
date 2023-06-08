@@ -167,7 +167,6 @@ namespace AI_Prompt_Editor.Views
             await _dbProcess.UpdateChatLogDatabaseAsync();
 
             VMLocator.DataGridViewModel.ChatList = await _dbProcess.SearchChatDatabaseAsync();
-            VMLocator.EditorViewModel.SelectedLangIndex = settings.SyntaxHighlighting;
 
             await _dbProcess.CleanUpEditorLogDatabaseAsync();
             VMLocator.EditorViewModel.SelectedEditorLogIndex = -1;
@@ -237,7 +236,6 @@ namespace AI_Prompt_Editor.Views
 
             settings.EditorFontSize = VMLocator.EditorViewModel.EditorCommonFontSize;
             settings.PhrasePreset = VMLocator.MainViewModel.SelectedPhraseItem;
-            settings.SyntaxHighlighting = VMLocator.EditorViewModel.SelectedLangIndex;
             settings.PhraseExpanderMode = VMLocator.MainViewModel.PhraseExpanderIsOpened;
 
             settings.EditorHeight1 = VMLocator.EditorViewModel.EditorHeight1;
