@@ -27,7 +27,7 @@ namespace AI_Prompt_Editor.ViewModels
         {
             try
             {
-                string escapedString = JsonSerializer.Serialize(VMLocator.EditorViewModel.RecentText);
+                string escapedString = JsonSerializer.Serialize(VMLocator.EditorViewModel.GetRecentText());
 
                 string script = @"const mainTag = document.querySelector('main');
                         const textarea = mainTag.querySelector('textarea');" +

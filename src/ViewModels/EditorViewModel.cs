@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using TextMateSharp.Grammars;
 using AI_Prompt_Editor.Views;
 using AI_Prompt_Editor.Models;
 using System.Windows.Input;
@@ -21,16 +22,9 @@ namespace AI_Prompt_Editor.ViewModels
         public EditorViewModel()
         {
             EditorCommonFontSize = 16;
+            EditorModeIsChecked = true;
 
             TextClear();
-
-            PropertyChanged += (sender, e) =>
-            {
-                if (e.PropertyName.StartsWith("Editor"))
-                {
-                    TextInput_TextChanged();
-                }
-            };
 
             _editorLogLists = new ObservableCollection<EditorLogs>();
 
@@ -109,6 +103,19 @@ namespace AI_Prompt_Editor.ViewModels
             }
         }
 
+        private ObservableCollection<Language> _languages;
+        public ObservableCollection<Language> Languages
+        {
+            get => _languages;
+            set => SetProperty(ref _languages, value);
+        }
+        private Language _selectedLang;
+        public Language SelectedLang
+        {
+            get => _selectedLang;
+            set => SetProperty(ref _selectedLang, value);
+        }
+
         private int _selectedLangIndex;
         public int SelectedLangIndex
         {
@@ -116,6 +123,66 @@ namespace AI_Prompt_Editor.ViewModels
             set => SetProperty(ref _selectedLangIndex, value);
         }
 
+        private UserControl _selectedEditor2View;
+        public UserControl SelectedEditor2View
+        {
+            get => _selectedEditor2View;
+            set => SetProperty(ref _selectedEditor2View, value);
+        }
+
+        private UserControl _selectedEditor4View;
+        public UserControl SelectedEditor4View
+        {
+            get => _selectedEditor4View;
+            set => SetProperty(ref _selectedEditor4View, value);
+        }
+
+        private bool _editorModeIsChecked;
+        public bool EditorModeIsChecked
+        {
+            get => _editorModeIsChecked;
+            set
+            {
+                if (SetProperty(ref _editorModeIsChecked, value))
+                {
+                    UpdateSelectedEditorView();
+                }
+            }
+        }
+
+        private Editor2AvalonEditView _editor2AvalonEditView;
+        private Editor2TextBoxView _editor2TextBoxView;
+        private Editor4AvalonEditView _editor4AvalonEditView;
+        private Editor4TextBoxView _editor4TextBoxView;
+        private void UpdateSelectedEditorView()
+        {
+            if (_editorModeIsChecked)
+            {
+                if (_editor2AvalonEditView == null)
+                {
+                    _editor2AvalonEditView = new Editor2AvalonEditView();
+                }
+                if (_editor4AvalonEditView == null)
+                {
+                    _editor4AvalonEditView = new Editor4AvalonEditView();
+                }
+                SelectedEditor2View = _editor2AvalonEditView;
+                SelectedEditor4View = _editor4AvalonEditView;
+            }
+            else
+            {
+                if (_editor2TextBoxView == null)
+                {
+                    _editor2TextBoxView = new Editor2TextBoxView();
+                }
+                if (_editor4TextBoxView == null)
+                {
+                    _editor4TextBoxView = new Editor4TextBoxView();
+                }
+                SelectedEditor2View = _editor2TextBoxView;
+                SelectedEditor4View = _editor4TextBoxView;
+            }
+        }
 
         private ObservableCollection<PromptTemplate> _templateItems;
         public ObservableCollection<PromptTemplate> TemplateItems
@@ -176,6 +243,7 @@ namespace AI_Prompt_Editor.ViewModels
             set => SetProperty(ref _editorHeight5, value);
         }
 
+
         private async Task SaveTemplateAsync()
         {
             string phrasesText;
@@ -197,7 +265,7 @@ namespace AI_Prompt_Editor.ViewModels
                         return;
                     }
                 }
-                else if(string.IsNullOrWhiteSpace(RecentText))
+                else if(string.IsNullOrWhiteSpace(GetRecentText()))
                 {
                     return;
                 }
@@ -342,7 +410,7 @@ namespace AI_Prompt_Editor.ViewModels
 
         private async Task ExportTemplateAsync()
         {
-            if (SelectedTemplateItemIndex < 0 || string.IsNullOrWhiteSpace(RecentText))
+            if (SelectedTemplateItemIndex < 0 || string.IsNullOrWhiteSpace(GetRecentText()))
             {
                 return;
             }
@@ -402,20 +470,21 @@ namespace AI_Prompt_Editor.ViewModels
             EditorHeight5 = new GridLength(0.08, GridUnitType.Star);
         }
 
-        public void TextInput_TextChanged()
+        public string GetRecentText()
         {
-            List<string> inputText = new List<string>();
-            inputText.Clear();
-            inputText.Add(string.Join(Environment.NewLine, Editor1Text));
-            inputText.Add(string.Join(Environment.NewLine, Editor2Text));
-            inputText.Add(string.Join(Environment.NewLine, Editor3Text));
-            inputText.Add(string.Join(Environment.NewLine, Editor4Text));
-            inputText.Add(string.Join(Environment.NewLine, Editor5Text));
+            List<string> inputText = new List<string>
+            {
+                string.Join(Environment.NewLine, Editor1Text.Trim()),
+                string.Join(Environment.NewLine, Editor2Text.Trim()),
+                string.Join(Environment.NewLine, Editor3Text.Trim()),
+                string.Join(Environment.NewLine, Editor4Text.Trim()),
+                string.Join(Environment.NewLine, Editor5Text.Trim())
+            };
 
             var outputText = inputText;
-            outputText.RemoveAll(s => string.IsNullOrWhiteSpace(s)); // ç©ºè¡Œã‚’å‰Šé™¤
+            outputText.RemoveAll(s => string.IsNullOrWhiteSpace(s)); // ‹ós‚ðíœ
 
-            RecentText = string.Join(Environment.NewLine + "---" + Environment.NewLine, outputText);
+            return string.Join(Environment.NewLine + "---" + Environment.NewLine, outputText);
         }
 
         public void TextClear()
@@ -425,7 +494,6 @@ namespace AI_Prompt_Editor.ViewModels
             Editor3Text = string.Empty;
             Editor4Text = string.Empty;
             Editor5Text = string.Empty;
-            RecentText = string.Empty;
             SelectedTemplateItemIndex = -1;
         }
 
@@ -434,13 +502,6 @@ namespace AI_Prompt_Editor.ViewModels
         {
             get => _editorCommonFontSize;
             set => SetProperty(ref _editorCommonFontSize, value);
-        }
-
-        private string _recentText;
-        public string RecentText
-        {
-            get => _recentText;
-            set => SetProperty(ref _recentText, value);
         }
 
         private string _editor1Text;
