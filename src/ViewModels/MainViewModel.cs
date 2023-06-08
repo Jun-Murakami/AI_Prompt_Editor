@@ -217,7 +217,7 @@ namespace AI_Prompt_Editor.ViewModels
 
         private async Task PostAsync()
         {
-            if (string.IsNullOrWhiteSpace(VMLocator.EditorViewModel.GetRecentText()) || VMLocator.ChatViewModel.ChatIsRunning)
+            if (string.IsNullOrWhiteSpace(VMLocator.EditorViewModel.GetRecentText()) || VMLocator.ChatViewModel.ChatIsRunning || SelectedLeftPane == "Log Viewer")
             {
                 return;
             }
