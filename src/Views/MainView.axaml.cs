@@ -42,7 +42,7 @@ namespace AI_Prompt_Editor.Views
             rPane.SelectedIndex = 0;
 
             _rightPane.Navigate(typeof(EditorView));
-            _leftPane.Navigate(typeof(ChatView));
+            _leftPane.Navigate(typeof(WebChatView));
         }
 
 
