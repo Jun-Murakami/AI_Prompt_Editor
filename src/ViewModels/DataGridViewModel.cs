@@ -9,7 +9,6 @@ namespace AI_Prompt_Editor.ViewModels
 {
     public class DataGridViewModel : ViewModelBase
     {
-
         private int _selectedItemIndex;
         public int SelectedItemIndex
         {
@@ -55,15 +54,14 @@ namespace AI_Prompt_Editor.ViewModels
                 {
                     OnPropertyChanged(nameof(SelectedItemId));
 
-                    if (_selectedItem != default && DataGridIsFocused)
+                    if (SelectedItemId != -1 && _selectedItem != null && !VMLocator.ChatViewModel.ChatIsRunning && DataGridIsFocused)
                     {
                         VMLocator.ChatViewModel.LastId = _selectedItem.Id;
                         ShowChatLogAsync(_selectedItem.Id);
                     }
-                    else
+                    else if (!string.IsNullOrWhiteSpace(VMLocator.MainViewModel.SearchLogKeyword))
                     {
                         SelectedItemIndex = -1;
-                        VMLocator.ChatViewModel.LastId = -1;
                     }
                 }
             }
@@ -95,9 +93,9 @@ namespace AI_Prompt_Editor.ViewModels
                     _chatViewModel.LastConversationHistory = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(result[5]);
                 }
 
-                if (VMLocator.MainViewModel.SelectedLeftPane != "Log Viewer")
+                if (VMLocator.MainViewModel.SelectedLeftPane != "API Chat")
                 {
-                    VMLocator.MainViewModel.SelectedLeftPane = "Log Viewer";
+                    VMLocator.MainViewModel.SelectedLeftPane = "API Chat";
                 }
             }
         }

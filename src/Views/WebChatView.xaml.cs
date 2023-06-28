@@ -39,7 +39,7 @@ namespace AI_Prompt_Editor.Views
 
         private void FocusSearchBox(object sender, RoutedEventArgs e)
         {
-            if (VMLocator.MainViewModel.SelectedLeftPane == "ChatGPT")
+            if (VMLocator.MainViewModel.SelectedLeftPane == "Web Chat")
             {
                 _searchBox.Focus();
             }
@@ -58,12 +58,17 @@ namespace AI_Prompt_Editor.Views
         private async void Browser_LoadEnd(object sender, LoadEndEventArgs e)
         {
             string addElementsCode = @"
-                                    const button = document.createElement('button');
+                                    var button;
+                                    var style;
+                                    if (typeof button === 'undefined') {
+                                    button = document.createElement('button');
+                                    }
                                     button.id = 'floatingCopyButton';
                                     button.innerHTML = 'Copy to clipboard';
                                     document.body.appendChild(button);
-
-                                    const style = document.createElement('style');
+                                    if (typeof style === 'undefined') {
+                                    style = document.createElement('style');
+                                    }
                                     style.type = 'text/css';
                                     style.innerHTML = `
                                     #floatingCopyButton {
@@ -88,9 +93,14 @@ namespace AI_Prompt_Editor.Views
             browser.ExecuteJavaScript(addElementsCode);
 
             string scriptCode = @"
-                                const floatingButton = document.getElementById('floatingCopyButton');
-                                let savedSelection = null;
-
+                                var floatingButton;
+                                var savedSelection;
+                                if (typeof floatingButton === 'undefined') {
+                                floatingButton = document.getElementById('floatingCopyButton');
+                                }
+                                if (typeof savedSelection === 'undefined') {
+                                savedSelection = null;
+                                }
                                 document.body.addEventListener('mousedown', (event) => {
                                     // Check if right-click or Ctrl + click (Mac)
                                     if (event.button === 2 || (event.ctrlKey && event.button === 0)) {

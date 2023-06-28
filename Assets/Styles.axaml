@@ -1,7 +1,6 @@
 ﻿<Styles
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:AvalonEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
     xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
     xmlns:ui="using:FluentAvalonia.UI.Controls"
     xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives">
@@ -71,7 +70,7 @@
         </Style>
 
         <Style Selector="Grid#PhrasePresets Button.KeyDown">
-            <Setter Property="Background" Value="rgb(100, 90, 165)" />
+            <Setter Property="Background" Value="rgb(77, 75, 108)" />
         </Style>
 
         <Style Selector="Grid#PhrasePresets Button:pressed">
@@ -137,19 +136,19 @@
             <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
         </Style>
 
-        <Style Selector="ListBox,ListBoxItem,ListBoxItem:selected">
-            <Setter Property="Height" Value="36" />
-            <Setter Property="MinHeight" Value="36" />
-        </Style>
-        <Style Selector="ListBox TextBlock,ListBoxItem TextBlock,ListBoxItem:selected TextBlock">
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="Height" Value="20" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
-        </Style>
-        <Style Selector="ListBoxItem /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Height" Value="30" />
-            <Setter Property="Padding" Value="0" />
-        </Style>
+		<Style Selector="ListBox,ListBoxItem,ListBoxItem:selected">
+			<Setter Property="Height" Value="36" />
+			<Setter Property="MinHeight" Value="36" />
+		</Style>
+		<Style Selector="ListBox TextBlock,ListBoxItem TextBlock,ListBoxItem:selected TextBlock">
+			<Setter Property="FontSize" Value="16" />
+			<Setter Property="Height" Value="20" />
+			<Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
+		</Style>
+		<Style Selector="ListBoxItem /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Height" Value="30" />
+			<Setter Property="Padding" Value="0" />
+		</Style>
         <Style Selector="Grid#EditorGrid TextBox,Grid TextBox#PreviewTextBox">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="SelectionBrush" Value="rgb(110, 100, 175)" />
@@ -249,7 +248,7 @@
         </Style>
 
         <Style Selector="Grid#PhrasePresets TextBox.KeyDown">
-            <Setter Property="Background" Value="rgb(100, 90, 165)" />
+            <Setter Property="Background" Value="rgb(77, 75, 108)" />
         </Style>
 
 

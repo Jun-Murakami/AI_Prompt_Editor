@@ -3,20 +3,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		xmlns:ui="using:FluentAvalonia.UI.Controls"
 		PointerWheelChanged="UserControl_PointerWheelChanged"
         x:Class="AI_Prompt_Editor.Views.EditorView">
 		<Grid VerticalAlignment="Stretch" Name="EditorGrid">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="50" />
-				<RowDefinition Height="{Binding EditorHeight1,Mode=TwoWay}" MinHeight="10" />
-				<RowDefinition Height="2"/>
-				<RowDefinition Height="{Binding EditorHeight2,Mode=TwoWay}" MinHeight="10" />
-				<RowDefinition Height="2"/>
-				<RowDefinition Height="{Binding EditorHeight3,Mode=TwoWay}" MinHeight="10" />
-				<RowDefinition Height="2"/>
-				<RowDefinition Height="{Binding EditorHeight4,Mode=TwoWay}" MinHeight="10" />
-				<RowDefinition Height="2"/>
-				<RowDefinition Height="{Binding EditorHeight5,Mode=TwoWay}" MinHeight="10" />
+				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<Border Grid.Row="0" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" BorderThickness="0,0,0,1">
 				<Grid>
@@ -99,35 +92,7 @@
 
 				</Grid>
 			</Border>
-			<TextBox Grid.Row="1"
-					 Name="Editor1"
-					 AcceptsReturn="True"
-					 Text="{Binding Editor1Text, Mode=TwoWay}"
-					 FontSize="{Binding EditorCommonFontSize}" />
-			<GridSplitter Grid.Row="2" Height="2" Background="rgb(52, 53, 65)" Focusable="False"/>
-			<TextBox Grid.Row="3"
-					 Name="Editor2"
-					 AcceptsReturn="True"
-					 Text="{Binding Editor2Text, Mode=TwoWay}"
-					 FontSize="{Binding EditorCommonFontSize}" />
-			<GridSplitter Grid.Row="4" Height="2" Background="rgb(52, 53, 65)" Focusable="False"/>
-			<TextBox Grid.Row="5"
-					 Name="Editor3"
-					 AcceptsReturn="True"
-					 Text="{Binding Editor3Text, Mode=TwoWay}"
-					 FontSize="{Binding EditorCommonFontSize}" />
-			<GridSplitter Grid.Row="6" Height="2" Background="rgb(52, 53, 65)" Focusable="False" />
-			<TextBox Grid.Row="7"
-					 Name="Editor4"
-					 AcceptsReturn="True"
-					 Text="{Binding Editor4Text, Mode=TwoWay}"
-					 FontSize="{Binding EditorCommonFontSize}" />
-			<GridSplitter Grid.Row="8" Height="2" Background="rgb(52, 53, 65)" Focusable="False" />
-			<TextBox Grid.Row="9"
-					 Name="Editor5"
-					 AcceptsReturn="True"
-					 Text="{Binding Editor5Text, Mode=TwoWay}"
-					 FontSize="{Binding EditorCommonFontSize}"/>
+			<ui:Frame Grid.Row="1" Name="EditorFrame" />
 		</Grid>
 		<UserControl.Resources>
 			<MenuFlyout x:Key="TemplateMenuFlyout" Placement="Bottom">

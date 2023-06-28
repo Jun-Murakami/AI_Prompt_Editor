@@ -42,7 +42,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <ListBox Grid.Row="0"
-                             ItemsSource="{Binding LogPanes}"
+                             Items="{Binding LogPanes}"
                              SelectedItem="{Binding SelectedLogPain}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -117,7 +117,7 @@
                 </Grid.ColumnDefinitions>
                 <ListBox Grid.Row="0" Grid.Column="0"
                          Name="LeftPaneList"
-                         ItemsSource="{Binding LeftPanes}"
+                         Items="{Binding LeftPanes}"
                          SelectedItem="{Binding SelectedLeftPane}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -129,7 +129,7 @@
                 <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="5"/>
                 <Grid Grid.Row="0" Grid.Column="2" >
                     <ListBox Name="RightPaneList"
-                             ItemsSource="{Binding RightPanes}"
+                             Items="{Binding RightPanes}"
                              SelectedItem="{Binding SelectedRightPane}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -137,17 +137,40 @@
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
-                    <Button ToolTip.Tip="Reset separator"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            BorderThickness="0"
-                            Width="28"
-                            Height="28"
-                            Margin="0,0,60,0"
-                            Command="{Binding ResetSeparatorCommand}">
-                        <Image Source="/Assets/iconSeparator.png"
-                               VerticalAlignment="Center" />
-                    </Button>
+					
+					<Button ToolTip.Tip="Switch to full editor"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Center"
+							BorderThickness="0"
+							Width="28"
+							Height="28"
+							Margin="0,0,120,0"
+							Command="{Binding EditorOneCommand}">
+						<Image Source="/Assets/iconOne.png"
+								VerticalAlignment="Center" />
+					</Button>
+					<Button ToolTip.Tip="Switch to three split mode"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Center"
+						BorderThickness="0"
+						Width="28"
+						Height="28"
+						Margin="0,0,90,0"
+						Command="{Binding EditorThreeCommand}">
+						<Image Source="/Assets/iconThree.png"
+								VerticalAlignment="Center" />
+					</Button>
+					<Button ToolTip.Tip="Switch to five split mode"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Center"
+							BorderThickness="0"
+							Width="28"
+							Height="28"
+							Margin="0,0,60,0"
+							Command="{Binding EditorFiveCommand}">
+						<Image Source="/Assets/iconSeparator.png"
+								VerticalAlignment="Center" />
+					</Button>
                     <Button ToolTip.Tip="Database settings"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
@@ -246,7 +269,7 @@
                         <TextBlock Text="{DynamicResource My.Strings.PhrasePresets}"
                                    Margin="10,8,5,16"
                                    VerticalAlignment="Bottom" />
-                        <ComboBox ItemsSource="{Binding PhrasePresetsItems}"
+                        <ComboBox Items="{Binding PhrasePresetsItems}"
                                   SelectedItem="{Binding SelectedPhraseItem}"
                                   Width="200"
                                   VerticalAlignment="Bottom"

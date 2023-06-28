@@ -16,6 +16,8 @@ using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using static AI_Prompt_Editor.Models.HtmlProcess;
 using System.Reactive.Joins;
+using static AI_Prompt_Editor.Models.ChatProcess;
+using System.Threading;
 
 namespace AI_Prompt_Editor.ViewModels
 {
@@ -26,6 +28,7 @@ namespace AI_Prompt_Editor.ViewModels
         private Button _button2;
         DatabaseProcess _databaseProcess = new DatabaseProcess();
         HtmlProcess _htmlProcess = new HtmlProcess();
+        ChatProcess _chatProcess = new ChatProcess();
 
         public ChatViewModel()
         {
@@ -38,6 +41,8 @@ namespace AI_Prompt_Editor.ViewModels
             InitializeChatCommand = new AsyncRelayCommand(async () => await InitializeChatAsync());
             OpenApiSettingsCommand = new RelayCommand(OpenApiSettings);
 
+            ShowSystemMessageInfoCommand = new RelayCommand(ShowSystemMessageInfo);
+
             SearchPrev = new AsyncRelayCommand(async () => await TextSearch(VMLocator.MainViewModel.SearchKeyword, false));
             SearchNext = new AsyncRelayCommand(async () => await TextSearch(VMLocator.MainViewModel.SearchKeyword, true));
 
@@ -48,19 +53,20 @@ namespace AI_Prompt_Editor.ViewModels
         public IAsyncRelayCommand CategoryUpdateCommand { get; }
         public IAsyncRelayCommand InitializeChatCommand { get; }
         public ICommand OpenApiSettingsCommand { get; }
+        public ICommand ShowSystemMessageInfoCommand { get; }
         public IAsyncRelayCommand SearchPrev { get; }
         public IAsyncRelayCommand SearchNext { get; }
 
-        public async Task GoChatAsync()
+        public async Task<bool> GoChatAsync(CancellationToken token)
         {
             if (ChatIsRunning)//チャット実行中の場合はキャンセル
             {
-                return;
+                return true;
             }
             ChatIsRunning = true;
 
             var postDate = DateTime.Now;
-            if (LastId !>= 0 && string.IsNullOrWhiteSpace(ChatTitle)) //チャット表示無ければ新規と判断
+            if (LastId < 0) //チャット表示無ければ新規と判断
             {
                 await InitializeChatAsync();
                 await Task.Delay(500);
@@ -68,7 +74,8 @@ namespace AI_Prompt_Editor.ViewModels
 
             try
             {
-                if(ReEditIsOn)
+                // 再編集モード時の初期化
+                if (ReEditIsOn)
                 {
                     string Code = @"var userDivs = document.querySelectorAll('.user'); // userクラスのdiv要素を取得
                                     for (var i = 0; i < userDivs.length; i++) {
@@ -82,98 +89,232 @@ namespace AI_Prompt_Editor.ViewModels
                     _browser.ExecuteJavaScript(Code);
                 }
 
-                await Task.Delay(100);
-
+                // ユーザー入力を取得
                 string postText = VMLocator.EditorViewModel.GetRecentText().Trim().Trim('\r', '\n');
 
+                // ロゴを削除
                 string jsCode = $@"var element = document.querySelector('.svg-container');
                                 if (element) {{
                                     element.remove();
                                 }}";
                 _browser.ExecuteJavaScript(jsCode);
-                await Task.Delay(100);
+
 
                 string escapedString = JsonSerializer.Serialize(postText);
 
+                string htmlToAdd = $"<span class=\"userHeader\">[{postDate}] by You</span>";
+
+                string additonalJsCode = "";
+                bool isOnlySystemMessage = false;
+                string postTextBody = "";
+
                 // システムメッセージの処理
                 string systemMessage = "";
-                if (postText.StartsWith("#system", StringComparison.OrdinalIgnoreCase) || postText.StartsWith("# system", StringComparison.OrdinalIgnoreCase))
+                if (Regex.IsMatch(postText, @"^#\s*system", RegexOptions.IgnoreCase))
                 {
-                    escapedString = Regex.Replace(postText, @"^#(\s*?)system", "", RegexOptions.IgnoreCase).Trim();
+                    string tempString = Regex.Replace(postText, @"^#(\s*?)system", "", RegexOptions.IgnoreCase).Trim();
 
                     // 最初の"---"の位置を検索
-                    int separatorIndex = escapedString.IndexOf("---");
+                    int separatorIndex = tempString.IndexOf("---");
+                    if (separatorIndex != -1)
+                    {
+                        systemMessage = tempString.Substring(0, separatorIndex).Trim();//システムメッセージを取得
+                        tempString = tempString.Substring(separatorIndex + 3).Trim();//本文だけ残す
+                    }
+                    else
+                    {
+                        systemMessage = tempString.Trim();//存在しなければシステムメッセージのみ
+                        tempString = "";
+                        isOnlySystemMessage = true;
+                    }
 
-                    systemMessage = escapedString.Substring(0, separatorIndex).Trim();//システムメッセージを取得
-                    if (systemMessage == "")
+                    if (string.IsNullOrWhiteSpace(systemMessage))
                     {
                         systemMessage = "System messages were turned off.";
                     }
 
-                    escapedString = escapedString.Substring(separatorIndex+3).Trim();//本文だけ残す
-                    escapedString = JsonSerializer.Serialize(escapedString);
+                    postTextBody = tempString;
+                    escapedString = JsonSerializer.Serialize(tempString);
+
+                    htmlToAdd = $"<span class=\"userHeader\">[{postDate}] by You</span>" +
+                                "<div class=\"codeHeader2\"><span class=\"lang\">System Message</span></div>" +
+                                $"<pre style=\"margin:0px 0px 2.5em 0px\"><code id=\"headerOn\" class=\"plaintext\">{systemMessage}</code></pre>";
+                    additonalJsCode = $@"hljs.highlightAll();";
                 }
 
-                string htmlToAdd = $"<div class=\"user\"><span class=\"userHeader\">[{postDate}] by You</span></div>";
 
-                string systemHtml = $"<div class=\"user\"><span class=\"userHeader\">[{postDate}] by You</span>" +
-                                    "<div class=\"codeHeader2\"><span class=\"lang\">System Message</span</div>" +
-                                    $"<pre style=\"margin:0px 0px 2.5em 0px\"><code id=\"headerOn\" class=\"plaintext\">{systemMessage}</code></pre></div>";
-
-                if (systemMessage !="")
-                {
-                    htmlToAdd = systemHtml;
-                }
-
+                // ユーザーの要素を生成
                 jsCode = $@"var wrapper = document.getElementById('scrollableWrapper');
                         var newUserElement = document.createElement('div');
+                        newUserElement.className = 'user';
                         newUserElement.innerHTML = `{htmlToAdd}`;
                         var newTextElement = document.createElement('div');
                         newTextElement.style.whiteSpace = 'pre-wrap';
                         newTextElement.id = 'document';
                         newTextElement.innerText = {escapedString};
                         newUserElement.querySelector('.userHeader').parentNode.appendChild(newTextElement);
-                        wrapper.appendChild(newUserElement);";
+                        wrapper.appendChild(newUserElement);
+                        {additonalJsCode}";
                 _browser.ExecuteJavaScript(jsCode);
-
-                await Task.Delay(100);
 
                 jsCode = $@"window.scrollTo({{top: document.body.scrollHeight, behavior: 'smooth' }});";
                 _browser.ExecuteJavaScript(jsCode);
 
-                await Task.Delay(100);
+                // アシスタントの要素を生成。システムメッセージのみの場合はスキップ
+                if (!isOnlySystemMessage)
+                {
+                    htmlToAdd = $"<span class=\"thinkingHeader\">Now thinking...</span>";
 
-                htmlToAdd = $"<div class=\"assistant\"><span class=\"thinkingHeader\">Now thinking...</span></div>";
-
-                jsCode = $@"var wrapper = document.getElementById('scrollableWrapper');
+                    jsCode = $@"var wrapper = document.getElementById('scrollableWrapper');
                         var newAssistantElement = document.createElement('div');
+                        newAssistantElement.className = 'assistant';
                         newAssistantElement.innerHTML = `{htmlToAdd}`;
                         wrapper.appendChild(newAssistantElement);";
-                _browser.ExecuteJavaScript(jsCode);
+                    _browser.ExecuteJavaScript(jsCode);
 
-                jsCode = $@"window.scrollTo({{top: document.body.scrollHeight, behavior: 'smooth' }});";
-                _browser.ExecuteJavaScript(jsCode);
+                    jsCode = $@"window.scrollTo({{top: document.body.scrollHeight, behavior: 'smooth' }});";
+                    _browser.ExecuteJavaScript(jsCode);
+                }
 
-                await Task.Delay(100);
+                // 既存のシステムメッセージをディープコピー
+                Dictionary<string, object>? oldSystemMessage = null;
+                foreach (var item in ConversationHistory)
+                {
+                    if (item.ContainsKey("role") && item["role"].ToString() == "system" && item.ContainsKey("content"))
+                    {
+                        string json = JsonSerializer.Serialize(item);
+                        oldSystemMessage = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+                        break;
+                    }
+                }
 
-                var resText = await _htmlProcess.PostChatAsync(postText);
+                // パラメータを生成
+                ChatParameters postParameters = new ChatParameters {
+                    UserInput = postText,
+                    UserInputBody = postTextBody,
+                    AssistantResponse = "",
+                    ChatTitle = VMLocator.ChatViewModel.ChatTitle,
+                    OldSystemMessageDic = oldSystemMessage,
+                    NewSystemMessageStr = systemMessage,
+                    ConversationHistory = ConversationHistory,
+                    PostedConversationHistory = null,
+                };
+
+                // システムメッセージのみの場合は投稿しない
+                string resText = "";
+                if (isOnlySystemMessage)
+                {
+                    // 既存のシステムメッセージがあれば削除
+                    var itemToRemove = GetSystemMessageItem(ConversationHistory);
+                    if (itemToRemove != null)
+                    {
+                        ConversationHistory!.Remove(itemToRemove);
+                    }
+
+                    // 新しいシステムメッセージがあれば会話履歴の先頭に追加
+                    var systemInput = new Dictionary<string, object>() { { "role", "system" }, { "content", systemMessage } };
+                    if (!string.IsNullOrWhiteSpace(systemMessage))
+                    {
+                        ConversationHistory!.Insert(0, systemInput);
+                    }
+
+                    if (string.IsNullOrEmpty(ChatCategory))
+                    {
+                        ChatCategory = "API Chat";
+                    }
+                }
+                else
+                {
+                    // キャンセルボタンを表示
+                    jsCode = @"var stopButton = document.getElementById('stopButton');
+                               stopButton.style.display = 'block';";
+                    _browser.ExecuteJavaScript(jsCode);
+
+                    await Task.Delay(100);
+
+                    // メッセージ投稿 /////////////////////////////////////////////////
+                    resText = await _chatProcess.PostChatAsync(postParameters, token);
+
+
+                    if (string.IsNullOrWhiteSpace(resText)) //返答が空だったら返答前にキャンセルされたと判断する
+                    {
+                        jsCode = $@"var wrapper = document.getElementById('scrollableWrapper');
+                                var userElements = wrapper.getElementsByClassName('user');
+                                var assistantElements = wrapper.getElementsByClassName('assistant');
+                                if(userElements.length > 0 && assistantElements.length > 0) {{
+                                    userElements[userElements.length - 1].remove(); // 最後の'user'要素を削除
+                                    assistantElements[assistantElements.length - 1].remove(); // 最後の'assistant'要素を削除
+                                }}
+                            ";
+                        _browser.ExecuteJavaScript(jsCode);
+
+                        jsCode = $@"window.scrollTo({{top: document.body.scrollHeight, behavior: 'smooth' }});
+                                    var stopButton = document.getElementById('stopButton');
+                                    stopButton.style.display = 'none';";
+                        _browser.ExecuteJavaScript(jsCode);
+                        ChatIsRunning = false;
+                        return false;
+                    }
+
+                    // キャンセルボタンを非表示
+                    jsCode = @"var stopButton = document.getElementById('stopButton');
+                               stopButton.style.display = 'none';";
+                    _browser.ExecuteJavaScript(jsCode);
+
+                    //会話が成立した時点でタイトルが空欄だったらタイトルを自動生成する
+                    if (string.IsNullOrEmpty(ChatTitle))
+                    {
+                        ChatTitle = await _chatProcess.GetTitleAsync(ConversationHistory);
+                    }
+                }
+
+                // カテゴリーが空欄だったら「API Chat」を自動設定する
+                if (string.IsNullOrEmpty(VMLocator.ChatViewModel.ChatCategory))
+                {
+                    VMLocator.ChatViewModel.ChatCategory = "API Chat";
+                }
+
                 var resDate = DateTime.Now;
 
-                await Task.Delay(100);
-
+                // データベースを更新
                 await _databaseProcess.InsertDatabaseChatAsync(postDate, postText, resDate, resText);
 
-                await Task.Delay(100);
+                await Task.Delay(700);
+
+                // エディットボタン初期化
+                jsCode = $@"var wrapper = document.getElementById('scrollableWrapper');
+                        var editDivs = wrapper.querySelectorAll('.editDiv');
+                        editDivs.forEach(function(editDiv) {{
+                            editDiv.parentNode.removeChild(editDiv);
+                        }});
+                        var userDivs = wrapper.querySelectorAll('.user');
+                        var lastUserDiv = userDivs[userDivs.length - 1];
+                        var documentDivs = lastUserDiv.querySelectorAll('#document');
+                        var lastDocumentDiv = documentDivs[documentDivs.length - 1];
+                        if (lastDocumentDiv) {{
+                            lastDocumentDiv.innerHTML += '<br/><br/><div class=""editDiv""><button class=""editButton"">Edit</button></div>';
+                            const editButtons = document.querySelectorAll('.editButton');
+                            editButtons.forEach(button => button.addEventListener('click', switchEdit));
+                        }}
+                    ";
+                _browser.ExecuteJavaScript(jsCode);
 
                 jsCode = $@"window.scrollTo({{top: document.body.scrollHeight, behavior: 'smooth' }});";
                 _browser.ExecuteJavaScript(jsCode);
+
             }
             catch (Exception ex)
             {
+                // キャンセルボタンを非表示
+                string jsCode = @"var stopButton = document.getElementById('stopButton');
+                                  stopButton.style.display = 'block';";
+                _browser.ExecuteJavaScript(jsCode);
+
+                // エラーメッセージを表示
                 var htmlToAdd = $"<span class=\"assistantHeader\">[Error]</span><div style=\"white-space: pre-wrap\" id=\"document\">{ex.Message}</div>";
                 string escapedString = JsonSerializer.Serialize(htmlToAdd);
 
-                var jsCode = $@"var wrapper = document.getElementById('scrollableWrapper');
+                jsCode = $@"var wrapper = document.getElementById('scrollableWrapper');
                         var thinkingHeader = wrapper.querySelector('.thinkingHeader');
                         if (thinkingHeader) {{
                             var newElement = document.createElement('div');
@@ -188,79 +329,160 @@ namespace AI_Prompt_Editor.ViewModels
                         window.scrollTo({{top: document.body.scrollHeight, behavior: 'smooth' }});";
                 _browser.ExecuteJavaScript(jsCode);
                 ChatIsRunning = false;
-                throw;
+                //throw;
             }
 
             ChatIsRunning = false;
+            return true;
+        }
+        private Dictionary<string, object>? GetSystemMessageItem(List<Dictionary<string, object>>? conversationHistory)
+        {
+            foreach (var item in conversationHistory!)
+            {
+                if (item.ContainsKey("role") && item["role"].ToString() == "system" && item.ContainsKey("content"))
+                {
+                    return item;
+                }
+            }
+            return null;
         }
 
         // チャット受信メソッド--------------------------------------------------------------
         private bool isReceiving = false;
+        private string? postedHtml = "";
 
-        public async Task UpdateUIWithReceivedMessage(string message)
+        public async Task UpdateUIWithReceivedMessage(string? message,string chatText)
         {
+            bool isUpdateTag = false;
             var resDate = DateTime.Now;
-            var convertedHtml = await _htmlProcess.ConvertAddLogToHtml(message, resDate);
-            var escapedString = JsonSerializer.Serialize(convertedHtml);
+            string convertedHtml = await _htmlProcess.ConvertAddLogToHtml(chatText, resDate);
+            string escapedHtml = JsonSerializer.Serialize(convertedHtml);
+            string escapedString = JsonSerializer.Serialize(message);
 
-            if (message == "[DONE]")
+            // タグが追加されたかどうかを判定
+            if (convertedHtml.Length != (postedHtml + message).Length)
             {
-                await Task.Delay(100);
-                // 'thinkingHeader'を削除し、受信中フラグをオフにする
-                string removeThinkingHeaderScript = @"
-                    var thinkingHeader = document.querySelector('.thinkingHeader');
-                    thinkingHeader.parentNode.removeChild(thinkingHeader);
-                    window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth' });
-                ";
-                _browser.ExecuteJavaScript(removeThinkingHeaderScript);
-                isReceiving = false;
+                isUpdateTag = true;
+            }
+
+            if (message == "[ERROR]") // エラーが発生した場合
+            {
+                string insertMessageScript = $@"
+                        (() => {{
+                            var wrapper = document.getElementById('scrollableWrapper');
+                            var thinkingHeader = wrapper.querySelector('.thinkingHeader');
+                            if (thinkingHeader) {{
+                                thinkingHeader.parentNode.removeChild(thinkingHeader);
+                            }} 
+                            var isBottom = isAtBottom5();
+                            const assistantElements = document.getElementsByClassName('assistant');
+                            const lastAssistantElement = assistantElements[assistantElements.length - 1];
+                            lastAssistantElement.innerHTML = {escapedHtml};
+                            hljs.highlightAll();
+                            window.scrollTo({{top: document.body.scrollHeight, behavior: 'smooth' }});
+                        }})();
+                    ";
+                _browser.ExecuteJavaScript(insertMessageScript);
+            }
+            else if (message == "[CANCEL]") // キャンセルされた場合
+            {
+                string insertMessageScript = $@"
+                        (() => {{
+                            var wrapper = document.getElementById('scrollableWrapper');
+                            var thinkingHeader = wrapper.querySelector('.thinkingHeader');
+                            if (thinkingHeader) {{
+                                thinkingHeader.parentNode.removeChild(thinkingHeader);
+                            }} 
+                            var isBottom = isAtBottom5();
+                            const assistantElements = document.getElementsByClassName('assistant');
+                            const lastAssistantElement = assistantElements[assistantElements.length - 1];
+                            lastAssistantElement.innerHTML = {escapedHtml};
+                            hljs.highlightAll();
+                            window.scrollTo({{top: document.body.scrollHeight, behavior: 'smooth' }});
+                        }})();
+                    ";
+                _browser.ExecuteJavaScript(insertMessageScript);
             }
             else
             {
                 if (!isReceiving)
                 {
-                    // 受信中フラグをオンにし、新しいdivを作成
+                    postedHtml = message;
+                    // 受信中フラグをオンにする
                     isReceiving = true;
-                    string createDivScript = $@"
-                        var newDiv = document.createElement('div');
-                        newDiv.id = 'receivingDiv';
-                        var thinkingHeader = document.querySelector('.thinkingHeader');
-                        thinkingHeader.parentNode.insertBefore(newDiv, thinkingHeader.nextSibling);
-                    ";
-                    _browser.ExecuteJavaScript(createDivScript);
                 }
                 else
                 {
-                    // メッセージを受信し、文字挿入前にスクロール位置が一番下にあった場合のみスクロール実行
-                    string insertMessageScript = $@"
-                        (() => {{
-                            var isBottom = isAtBottom();
-                            var receivingDiv = document.getElementById('receivingDiv');
-                            {{receivingDiv.innerHTML = {escapedString};}}
-                            if (isBottom) {{
-                                window.scrollTo({{top: document.body.scrollHeight, behavior: 'smooth' }});
-                            }}
-                        }})();
-                    ";
-                    _browser.ExecuteJavaScript(insertMessageScript);
+                    string insertMessageScript;
+                    if (isUpdateTag)
+                    {
+                        // タグの更新があった場合はメッセージ全体を入れ替え、スクロール位置が一番下にあった場合のみスクロール実行
+                        insertMessageScript = $@"
+                            (() => {{
+                                var isBottom = isAtBottom5();
+                                const assistantElements = document.getElementsByClassName('assistant');
+                                const lastAssistantElement = assistantElements[assistantElements.length - 1];
+                                lastAssistantElement.innerHTML = {escapedHtml};
+                                hljs.highlightAll();
+                                if (isBottom) {{
+                                    if (!isAtBottom()){{
+                                        window.scrollTo({{top: document.body.scrollHeight, behavior: 'smooth' }});
+                                    }}
+                                }}
+                                const copyButtons = document.querySelectorAll('#copyButton');
+                                copyButtons.forEach(button => button.addEventListener('click', copyCode));
+                            }})();
+                        ";
+                        _browser.ExecuteJavaScript(insertMessageScript);
+                        postedHtml = convertedHtml;
 
+                        // 終了処理 'thinkingHeader'を削除し、受信中フラグをオフにする
+                        if (message == "[DONE]")
+                        {
+                            string removeThinkingHeaderScript = @"
+                                window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth' });
+                            ";
+                            _browser.ExecuteJavaScript(removeThinkingHeaderScript);
+                            isReceiving = false;
+                        }
+                    }
+                    else
+                    {
+                        // タグの更新がない場合は、メッセージのみを追加
+                        insertMessageScript = $@"
+                            (() => {{
+                                var isBottom = isAtBottom5();
+                                const assistantElements = document.getElementsByClassName('assistant');
+                                const lastAssistantElement = assistantElements[assistantElements.length - 1];
+                                const lastDivInLastAssistantElement = lastAssistantElement.querySelector(':scope > div:last-child');
+                                let newSpan = document.createElement('span');
+                                newSpan.innerText = {escapedString};
+                                lastDivInLastAssistantElement.appendChild(newSpan);
+                                if (isBottom) {{
+                                    if (!isAtBottom()){{
+                                        window.scrollTo({{top: document.body.scrollHeight, behavior: 'smooth' }});
+                                    }}
+                                }}
+                            }})();
+                        ";
+                        _browser.ExecuteJavaScript(insertMessageScript);
+                        postedHtml += message;
+                    }
                 }
-
             }
         }
-
 
         // 新しいチャットを初期化--------------------------------------------------------------
         public async Task InitializeChatAsync()
         {
             ReEditIsOn = false;
             ChatTitle = "";
+            ChatCategory = "";
             ConversationHistory = new List<Dictionary<string, object>>();
             LastConversationHistory = new List<Dictionary<string, object>>();
             LastId = -1;
             LastPrompt = "";
             HtmlContent = await _htmlProcess.InitializeChatLogToHtml();
-            VMLocator.DataGridViewModel.SelectedItem = default;
         }
 
         // タイトル更新--------------------------------------------------------------
@@ -324,7 +546,7 @@ namespace AI_Prompt_Editor.ViewModels
         // テキスト検索--------------------------------------------------------------
         public async Task TextSearch(string searchKeyword, bool searchDirection, bool searchReset = false)
         {
-            if (_browser == null || string.IsNullOrEmpty(VMLocator.MainViewModel.SearchKeyword))
+            if (_browser == null || string.IsNullOrEmpty(searchKeyword))
             {
                 return;
             }
@@ -352,6 +574,7 @@ namespace AI_Prompt_Editor.ViewModels
             return;
         }
 
+        // プロンプト再編集をオンにする--------------------------------------------------------------
         public void PromptEditOn()
         {
             ReEditIsOn = true;
@@ -371,16 +594,61 @@ namespace AI_Prompt_Editor.ViewModels
                     }
                 }
             }
-
         }
 
+        // プロンプト再編集をオフにする--------------------------------------------------------------
         public void PromptEditOff()
         {
             ReEditIsOn = false;
-            // JavaScriptから呼び出されるメソッドの実装
             VMLocator.EditorViewModel.TextClear();
         }
 
+        // システムメッセージの表示--------------------------------------------------------------
+        private void ShowSystemMessageInfo()
+        {
+            string? SystemMessage = "";
+
+            foreach (var item in ConversationHistory)
+            {
+                if (item.ContainsKey("role") && item["role"].ToString() == "system" && item.ContainsKey("content"))
+                {
+                    SystemMessage = item["content"].ToString();
+                    break;
+                }
+            }
+
+            if (string.IsNullOrEmpty(SystemMessage))
+            {
+                Avalonia.Application.Current!.TryFindResource("My.Strings.SystemMessageInfo", out object? resource1);
+                SystemMessage = resource1.ToString();
+            }
+
+            string escapedHtml = JsonSerializer.Serialize(SystemMessage);
+
+
+            var jsCode = $@"
+                        (() => {{
+                            var floatingSystemMessageInfo = document.getElementById('floatingSystemMessageInfo');
+                            if (floatingSystemMessageInfo.style.display === 'block') {{
+                                floatingSystemMessageInfo.style.opacity = 0.95;
+                                floatingSystemMessageInfo.style.transition = 'opacity 0.5s';
+                                floatingSystemMessageInfo.style.opacity = 0;
+                                setTimeout(function() {{
+                                    
+                                    floatingSystemMessageInfo.style.display = 'none';
+                                }}, 1000);
+                                return;
+                            }}
+
+                            var systemMessageElement = document.querySelector('#floatingSystemMessageInfo div.codeBody');
+                            systemMessageElement.innerText = {escapedHtml};
+
+                            floatingSystemMessageInfo.style.display = 'block';
+                            floatingSystemMessageInfo.style.opacity = 0.95;
+                        }})();";
+            _browser.ExecuteJavaScript(jsCode);
+
+        }
 
         // Browserインスタンスを受け取る
         public async void SetBrowser(AvaloniaCefBrowser browser)

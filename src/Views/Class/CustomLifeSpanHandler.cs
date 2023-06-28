@@ -22,6 +22,10 @@ namespace AI_Prompt_Editor
             {
                 VMLocator.ChatViewModel.PromptEditOff();
             }
+            else if (targetUrl == "https://stopgenerating/")
+            {
+                VMLocator.MainViewModel.CancelPost();
+            }
             else
             {
                 // OSの既定のブラウザでリンクを開く

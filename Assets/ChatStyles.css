@@ -1,7 +1,7 @@
 body {
   background: #343541;
   color: #dcdcdc;
-  margin: 10px 10px 50px 0px;
+  margin: 10px 10px 80px 0px;
   font-size: 12pt;
   line-height: 1.7em;
   font-family: Söhne,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,Helvetica Neue,Arial,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
@@ -10,6 +10,11 @@ body {
 ::selection {
   background-color: #6e64af;
   color: #dcdcdc;
+}
+
+strong {
+    font-weight: 700;
+    color: #eeeeee;
 }
 
 a:link, a:visited {
@@ -31,11 +36,6 @@ img {
   width: 100%;
   height: auto;
   margin: 1.2em 0px 1.2em 0px;
-}
-
-strong {
-  font-weight: 700;
-  color: #eeeeee;
 }
 
 ::-webkit-scrollbar {
@@ -158,21 +158,55 @@ div.usage {
 }
 
 #searchDisplay {
-  position: fixed;
-  width: 139px;
-  top: 7px;
-  right: 48px;
-  background: #3a3b47;
-  border-radius: 6px;
-  border-width: 1px;
-  border: #545563 solid;
-  padding:0px 15px 0px 15px;
-  display: none;
-  outline: none;
-  transition: opacity 0.6s;
-  font-size: 0.9em;
+    position: fixed;
+    width: 139px;
+    top: 7px;
+    right: 48px;
+    background: #3a3b47;
+    border-radius: 6px;
+    border-width: 1px;
+    border: #545563 solid;
+    padding: 0px 15px 0px 15px;
+    display: none;
+    outline: none;
+    transition: opacity 0.6s;
+    font-size: 0.9em;
+    box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1), 0.3em 0.3em 1em rgba(0,0,0,0.3);
 }
 
+#floatingSystemMessageInfo {
+    position: fixed;
+    height: auto;
+    padding: 0 30px 0 30px;
+    bottom: 15px;
+    background: none;
+    display: none;
+    border: none;
+    outline: none;
+    opacity: 0;
+}
+
+div.codeHeader3 {
+    display: flex;
+    justify-content: space-between;
+    background: #6F6EAF;
+    color: #eeeeee;
+    font-size: 0.8em;
+    border-radius: 6px 6px 0px 0px;
+    margin: 1.8em 0px 0px 0px;
+    padding: 0px 0px 0px 1em;
+    box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1), 0.3em 0.3em 1em rgba(0,0,0,0.3);
+}
+
+div.codeBody {
+    word-break: break-all;
+    font-size: 11pt;
+    line-height: 1.7em;
+    border-radius: 0px 0px 6px 6px;
+    padding: 1em;
+    background: #202020;
+    box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1), 0.3em 0.3em 1em rgba(0,0,0,0.3);
+}
 
 span.lang {
   text-align: left;
@@ -248,6 +282,25 @@ button {
   background: #444654;
 }
 
+#stopButton {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 15px;
+    display: none;
+    background: #343541;
+    border-width: 1px;
+    border: #545563 solid;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 6px;
+    opacity: 0.8;
+    box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1), 0.3em 0.3em 1em rgba(0,0,0,0.3);
+}
+#stopButton:hover {
+    background: #444654;
+}
+
 .svg-container {
     position: absolute;
     top: 50%;
@@ -256,6 +309,6 @@ button {
 }
 
 .svg-container svg {
-    width: 440px;
+    width: 300px;
     height: auto;
 }

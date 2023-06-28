@@ -31,8 +31,6 @@ namespace AI_Prompt_Editor.Views
 
             this.Loaded += MainWindow_Loaded;
 
-            this.Title = "AI Prompt Editor";
-
             DataContext = MainWindowViewModel;
             VMLocator.MainWindowViewModel = MainWindowViewModel;
 
@@ -82,9 +80,9 @@ namespace AI_Prompt_Editor.Views
             if (File.Exists(Path.Combine(settings.AppDataPath, "settings.json")))
             {
                 this.Width = settings.Width - 1;
-                this.Width = settings.Width;
-                this.Height = settings.Height;
                 this.Position = new PixelPoint(settings.X, settings.Y);
+                this.Height = settings.Height;
+                this.Width = settings.Width;
                 this.WindowState = settings.IsMaximized ? WindowState.Maximized : WindowState.Normal;
             }
             else
@@ -157,7 +155,7 @@ namespace AI_Prompt_Editor.Views
             await Dispatcher.UIThread.InvokeAsync(() => { VMLocator.MainViewModel.LogPainIsOpened = false; });
             if (this.Width > 1295)
             {
-                await Task.Delay(1000);
+                //await Task.Delay(1000);
                 await Dispatcher.UIThread.InvokeAsync(() => { VMLocator.MainViewModel.LogPainIsOpened = true; });
             }
 
@@ -167,9 +165,12 @@ namespace AI_Prompt_Editor.Views
             await _dbProcess.UpdateChatLogDatabaseAsync();
 
             VMLocator.DataGridViewModel.ChatList = await _dbProcess.SearchChatDatabaseAsync();
+            VMLocator.DataGridViewModel.SelectedItemIndex = -1;
+            VMLocator.EditorViewModel.EditorSeparateMode = settings.SeparatorMode;
 
             await _dbProcess.CleanUpEditorLogDatabaseAsync();
             VMLocator.EditorViewModel.SelectedEditorLogIndex = -1;
+
 
         }
 
@@ -243,6 +244,8 @@ namespace AI_Prompt_Editor.Views
             settings.EditorHeight3 = VMLocator.EditorViewModel.EditorHeight3;
             settings.EditorHeight4 = VMLocator.EditorViewModel.EditorHeight4;
             settings.EditorHeight5 = VMLocator.EditorViewModel.EditorHeight5;
+
+            settings.SeparatorMode = VMLocator.EditorViewModel.EditorSeparateMode;
 
             SaveAppSettings(settings);
         }

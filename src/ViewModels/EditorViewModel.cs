@@ -12,12 +12,18 @@ using FluentAvalonia.UI.Controls;
 using System.Threading.Tasks;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using System.Reactive;
+using TiktokenSharp;
 
 namespace AI_Prompt_Editor.ViewModels
 {
     public class EditorViewModel : ViewModelBase
     {
         DatabaseProcess _dbProcess = new DatabaseProcess();
+        private readonly Subject<Unit> _textChanged = new Subject<Unit>();
+
         public EditorViewModel()
         {
             EditorCommonFontSize = 16;
@@ -35,6 +41,9 @@ namespace AI_Prompt_Editor.ViewModels
             ImportTemplateCommand = new AsyncRelayCommand(ImportTemplateAsync);
             ExportTemplateCommand = new AsyncRelayCommand(ExportTemplateAsync);
 
+            _textChanged
+                .Throttle(TimeSpan.FromMilliseconds(500)) // 500ミリ秒のデバウンス時間を設定
+                .Subscribe(_ => GetRecentText());
         }
 
         public ICommand PrevCommand { get; }
@@ -101,6 +110,26 @@ namespace AI_Prompt_Editor.ViewModels
             }
         }
 
+        private UserControl _selectedEditor2View;
+        public UserControl SelectedEditor2View
+        {
+            get => _selectedEditor2View;
+            set => SetProperty(ref _selectedEditor2View, value);
+        }
+
+        private UserControl _selectedEditor4View;
+        public UserControl SelectedEditor4View
+        {
+            get => _selectedEditor4View;
+            set => SetProperty(ref _selectedEditor4View, value);
+        }
+
+        private UserControl _selectedEditor3_2View;
+        public UserControl SelectedEditor3_2View
+        {
+            get => _selectedEditor3_2View;
+            set => SetProperty(ref _selectedEditor3_2View, value);
+        }
 
         private ObservableCollection<PromptTemplate> _templateItems;
         public ObservableCollection<PromptTemplate> TemplateItems
@@ -159,6 +188,13 @@ namespace AI_Prompt_Editor.ViewModels
         {
             get => _editorHeight5;
             set => SetProperty(ref _editorHeight5, value);
+        }
+
+        private int _editorSeparateMode;
+        public int EditorSeparateMode
+        {
+            get => _editorSeparateMode;
+            set => SetProperty(ref _editorSeparateMode, value);
         }
 
 
@@ -379,13 +415,20 @@ namespace AI_Prompt_Editor.ViewModels
             }
         }
 
-        public void SeparatorReset()
+        public void SeparatorResetFive()
         {
             EditorHeight1 = new GridLength(0.21, GridUnitType.Star);
             EditorHeight2 = new GridLength(0.30, GridUnitType.Star);
             EditorHeight3 = new GridLength(0.17, GridUnitType.Star);
             EditorHeight4 = new GridLength(0.24, GridUnitType.Star);
             EditorHeight5 = new GridLength(0.08, GridUnitType.Star);
+        }
+
+        public void SeparatorResetThree()
+        {
+            EditorHeight1 = new GridLength(0.34, GridUnitType.Star);
+            EditorHeight2 = new GridLength(0.33, GridUnitType.Star);
+            EditorHeight3 = new GridLength(0.33, GridUnitType.Star);
         }
 
         public string GetRecentText()
@@ -401,9 +444,14 @@ namespace AI_Prompt_Editor.ViewModels
 
             var outputText = inputText;
             outputText.RemoveAll(s => string.IsNullOrWhiteSpace(s)); // 空行を削除
+            string outputTextStr = string.Join(Environment.NewLine + "---" + Environment.NewLine, outputText);
 
-            return string.Join(Environment.NewLine + "---" + Environment.NewLine, outputText);
+            TikToken tokenizer = TikToken.EncodingForModel("gpt-3.5-turbo"); // トークナイザーの初期化
+            VMLocator.MainViewModel.InputTokens = tokenizer.Encode(outputTextStr).Count.ToString() + " Tokens"; // トークナイズ
+
+            return outputTextStr;
         }
+
 
         public void TextClear()
         {
@@ -426,35 +474,65 @@ namespace AI_Prompt_Editor.ViewModels
         public string Editor1Text
         {
             get => _editor1Text;
-            set => SetProperty(ref _editor1Text, value);
+            set
+            {
+                if (SetProperty(ref _editor1Text, value))
+                {
+                    _textChanged.OnNext(Unit.Default);
+                }
+            }
         }
 
         private string _editor2Text;
         public string Editor2Text
         {
             get => _editor2Text;
-            set => SetProperty(ref _editor2Text, value);
+            set
+            {
+                if (SetProperty(ref _editor2Text, value))
+                {
+                    _textChanged.OnNext(Unit.Default);
+                }
+            }
         }
 
         private string _editor3Text;
         public string Editor3Text
         {
             get => _editor3Text;
-            set => SetProperty(ref _editor3Text, value);
+            set
+            {
+                if (SetProperty(ref _editor3Text, value))
+                {
+                    _textChanged.OnNext(Unit.Default);
+                }
+            }
         }
 
         private string _editor4Text;
         public string Editor4Text
         {
             get => _editor4Text;
-            set => SetProperty(ref _editor4Text, value);
+            set
+            {
+                if (SetProperty(ref _editor4Text, value))
+                {
+                    _textChanged.OnNext(Unit.Default);
+                }
+            }
         }
 
         private string _editor5Text;
         public string Editor5Text
         {
             get => _editor5Text;
-            set => SetProperty(ref _editor5Text, value);
+            set
+            {
+                if (SetProperty(ref _editor5Text, value))
+                {
+                    _textChanged.OnNext(Unit.Default);
+                }
+            }
         }
     }
 

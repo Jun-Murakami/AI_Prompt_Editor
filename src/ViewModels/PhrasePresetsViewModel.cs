@@ -20,6 +20,13 @@ namespace AI_Prompt_Editor.ViewModels
             set => SetProperty(ref _phrases, value);
         }
 
+        private int _keyDownNum;
+        public int KeyDownNum
+        {
+            get => _keyDownNum;
+            set => SetProperty(ref _keyDownNum, value);
+        }
+
         private bool _ctrlKeyIsDown;
         public bool CtrlKeyIsDown
         {
