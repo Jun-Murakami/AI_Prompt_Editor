@@ -39,6 +39,7 @@ namespace AI_Prompt_Editor
         public GridLength EditorHeight3 { get; set; }
         public GridLength EditorHeight4 { get; set; }
         public GridLength EditorHeight5 { get; set; }
+        public int SeparatorMode { get; set; }
 
         // ChatGPT API接続設定
         public int ApiMaxTokens { get; set; }
@@ -77,6 +78,7 @@ namespace AI_Prompt_Editor
             SyntaxHighlighting = 0;
             PhrasePreset = "";
             PhraseExpanderMode = true;
+            SeparatorMode = 5;
 
             EditorHeight1 = new GridLength(0.21, GridUnitType.Star);
             EditorHeight2 = new GridLength(0.30, GridUnitType.Star);
@@ -117,7 +119,7 @@ namespace AI_Prompt_Editor
 
         private string GetAppDataDirectory()
         {
-            string appDataPath = Path.Combine( Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AI_Prompt_Editor" );
+            string appDataPath = Path.Combine( Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AI_Prompt_Editor");
             if (!Directory.Exists(appDataPath))
             {
                 Directory.CreateDirectory(appDataPath);

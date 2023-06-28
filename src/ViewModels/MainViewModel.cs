@@ -14,6 +14,7 @@ using FluentAvalonia.UI.Controls;
 using Avalonia;
 using Avalonia.Platform.Storage;
 using System.Diagnostics;
+using System.Threading;
 
 namespace AI_Prompt_Editor.ViewModels
 {
@@ -47,7 +48,9 @@ namespace AI_Prompt_Editor.ViewModels
 
             CopyToClipboardCommand = new AsyncRelayCommand(async () => await CopyToClipboard());
 
-            ResetSeparatorCommand = new RelayCommand(ResetSeparator);
+            EditorOneCommand = new RelayCommand(SetEditorOne);
+            EditorThreeCommand = new RelayCommand(SetEditorThree);
+            EditorFiveCommand = new RelayCommand(SetEditorFive);
             SystemMessageCommand = new RelayCommand(InsertSystemMessage);
             HotKeyDisplayCommand = new AsyncRelayCommand(HotKeyDisplayAsync);
             OpenApiSettingsCommand = new RelayCommand(OpenApiSettings);
@@ -73,7 +76,9 @@ namespace AI_Prompt_Editor.ViewModels
         public ICommand Editor5Clear { get; }
         public ICommand EditorAllClear { get; }
         public ICommand CopyToClipboardCommand { get; }
-        public ICommand ResetSeparatorCommand { get; }
+        public ICommand EditorFiveCommand { get; }
+        public ICommand EditorThreeCommand { get; }
+        public ICommand EditorOneCommand { get; }
         public ICommand SystemMessageCommand { get; }
         public ICommand OpenApiSettingsCommand { get; }
         public IAsyncRelayCommand ShowDatabaseSettingsCommand { get; }
@@ -92,6 +97,7 @@ namespace AI_Prompt_Editor.ViewModels
                     if (string.IsNullOrWhiteSpace(value))
                     {
                         SearchKeyword = string.Empty;
+                        VMLocator.DataGridViewModel.SelectedItemIndex = -1;
                     }
                 }
             }
@@ -102,6 +108,13 @@ namespace AI_Prompt_Editor.ViewModels
         {
             get => _searchKeyword;
             set => SetProperty(ref _searchKeyword, value);
+        }
+
+        private bool _autoSaveIsChecked;
+        public bool AutoSaveIsChecked
+        {
+            get => _autoSaveIsChecked;
+            set => SetProperty(ref _autoSaveIsChecked, value);
         }
 
         private bool _logPainIsOpened;
@@ -172,7 +185,6 @@ namespace AI_Prompt_Editor.ViewModels
             set => SetProperty(ref _selectedLogPain, value);
         }
 
-
         private ObservableCollection<string> _phrasePresetsItems;
         public ObservableCollection<string> PhrasePresetsItems
         {
@@ -214,27 +226,30 @@ namespace AI_Prompt_Editor.ViewModels
             set => SetProperty(ref _postButtonText, value);
         }
 
+        private string _inputTokens;
+        public string InputTokens
+        {
+            get => _inputTokens;
+            set => SetProperty(ref _inputTokens, value);
+        }
+
+        // CancellationTokenSourceを作成
+        private CancellationTokenSource cts = new CancellationTokenSource();
 
         private async Task PostAsync()
         {
-            if (string.IsNullOrWhiteSpace(VMLocator.EditorViewModel.GetRecentText()) || VMLocator.ChatViewModel.ChatIsRunning || SelectedLeftPane == "Log Viewer")
+            if (string.IsNullOrWhiteSpace(VMLocator.EditorViewModel.GetRecentText()) || VMLocator.ChatViewModel.ChatIsRunning)
             {
                 return;
             }
+
+            CancellationToken token = cts.Token; // キャンセルトークンを作成
 
             List<Dictionary<string, object>>? backupConversationHistory = null;
 
             try
             {
-                if(VMLocator.ChatViewModel.ReEditIsOn && SelectedLeftPane == "API Chat")
-                {
-                    string? jsonCopy = System.Text.Json.JsonSerializer.Serialize(VMLocator.ChatViewModel.ConversationHistory);
-                    backupConversationHistory = System.Text.Json.JsonSerializer.Deserialize<List<Dictionary<string, object>>>(jsonCopy);
 
-                    jsonCopy = System.Text.Json.JsonSerializer.Serialize(VMLocator.ChatViewModel.LastConversationHistory);
-                    VMLocator.ChatViewModel.ConversationHistory = System.Text.Json.JsonSerializer.Deserialize<List<Dictionary<string, object>>>(jsonCopy);
-
-                }
                 await _dbProcess.InserEditorLogDatabasetAsync();
 
                 if (SelectedLeftPane == "ChatGPT")
@@ -244,13 +259,6 @@ namespace AI_Prompt_Editor.ViewModels
                 else if (SelectedLeftPane == "Bard")
                 {
                     await VMLocator.WebChatBardViewModel.PostWebChat();
-                }
-                else
-                {
-                    await VMLocator.ChatViewModel.GoChatAsync();
-                    VMLocator.DataGridViewModel.ChatList = await _dbProcess.SearchChatDatabaseAsync();
-                    VMLocator.DataGridViewModel.DataGridIsFocused = true;
-                    VMLocator.DataGridViewModel.SelectedItemIndex = 0;
                 }
 
                 VMLocator.EditorViewModel.TextClear();
@@ -273,6 +281,12 @@ namespace AI_Prompt_Editor.ViewModels
             }
         }
 
+        public void CancelPost()
+        {
+            cts.Cancel(); // キャンセル
+            cts = new CancellationTokenSource(); // CancellationTokenSourceを作り直す
+        }
+
         private async Task ImportChatLogAsync()
         {
             var dialog = new FilePickerOpenOptions
@@ -284,7 +298,7 @@ namespace AI_Prompt_Editor.ViewModels
                     new("All files (*.*)") { Patterns = new[] { "*" } }}
             };
 
-            var result = await (Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow.StorageProvider.OpenFilePickerAsync(dialog);
+            var result = await (Application.Current!.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)!.MainWindow!.StorageProvider.OpenFilePickerAsync(dialog);
 
             if (result.Count > 0)
             {
@@ -314,7 +328,7 @@ namespace AI_Prompt_Editor.ViewModels
                     new("All files (*.*)") { Patterns = new[] { "*" } }}
             };
 
-            var result = await (Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow.StorageProvider.SaveFilePickerAsync(dialog);
+            var result = await (Application.Current!.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)!.MainWindow!.StorageProvider.SaveFilePickerAsync(dialog);
 
             if (result != null)
             {
@@ -678,9 +692,28 @@ namespace AI_Prompt_Editor.ViewModels
             IsCopyButtonClicked = false;
         }
 
-        private void ResetSeparator()
+
+        private void SetEditorOne()
         {
-            VMLocator.EditorViewModel.SeparatorReset();
+            VMLocator.EditorViewModel.EditorSeparateMode = 1;
+        }
+
+        private void SetEditorThree()
+        {
+            if (VMLocator.EditorViewModel.EditorSeparateMode != 3)
+            {
+                VMLocator.EditorViewModel.EditorSeparateMode = 3;
+            }
+            VMLocator.EditorViewModel.SeparatorResetThree();
+        }
+
+        private void SetEditorFive()
+        {
+            if (VMLocator.EditorViewModel.EditorSeparateMode != 5)
+            {
+                VMLocator.EditorViewModel.EditorSeparateMode = 5;
+            }
+            VMLocator.EditorViewModel.SeparatorResetFive();
         }
 
         private void InsertSystemMessage()

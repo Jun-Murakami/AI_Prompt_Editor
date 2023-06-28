@@ -26,7 +26,7 @@
     <AvaloniaResource Include="Assets\Styles.axaml" />
     <None Remove=".gitignore" />
     <None Remove="Assets\AI_Prompt_Editor.ico" />
-    <None Remove="Assets\TmCGPTD.ico" />
+    <None Remove="Assets\AI_Prompt_Editor.ico" />
     <None Remove="src\Views\WebChatBardView.xaml" />
     <None Remove="src\Views\WebChatView.xaml" />
     <AvaloniaResource Include="Assets\Lato-Regular.ttf" />

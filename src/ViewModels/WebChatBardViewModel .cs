@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Xilium.CefGlue.Avalonia;
 using FluentAvalonia.UI.Controls;
 using AI_Prompt_Editor.Models;
+using System.Windows.Input;
 
 namespace AI_Prompt_Editor.ViewModels
 {
@@ -19,6 +20,7 @@ namespace AI_Prompt_Editor.ViewModels
             SearchNext = new AsyncRelayCommand(async () => await TextSearch(VMLocator.MainViewModel.SearchKeyword, true));
 
             ImportWebChatLogCommand = new AsyncRelayCommand(async () => await ImportWebChatLog());
+            UpdateBrowserCommand = new RelayCommand(UpdateBrowser);
 
             WebChatBardViewIsVisible = true;
         }
@@ -65,8 +67,8 @@ namespace AI_Prompt_Editor.ViewModels
             {
                 return;
             }
-            var dialog = new ContentDialog() { Title = msg, PrimaryButtonText = "OK" };
-            await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
+            //var dialog = new ContentDialog() { Title = msg, PrimaryButtonText = "OK" };
+            //await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
         }
 
         public async Task TextSearch(string searchKeyword, bool searchDirection, bool searchReset = false)
@@ -86,26 +88,28 @@ namespace AI_Prompt_Editor.ViewModels
               window.myCustomSearchFunction = function (keyword, searchForward, resetSearchIndex = false) {
                 
 
-                function getScrollParent(element) {
-                  while (element && element !== document.body) {
-                    // Element型でなければ、親要素に移動
-                    if (!(element instanceof Element) || element.tagName.toLowerCase() === 'pre') {
-                      element = element.parentElement;
-                      continue;
+                function findOverflowYAutoElement(element) {
+                    // 子要素を取得
+                    const children = element.children;
+
+                    for (let i = 0; i < children.length; i++) {
+                        const child = children[i];
+                        const style = window.getComputedStyle(child);
+
+                        // overflow-yがautoの場合、その要素を返す
+                        if (style.overflowY === 'auto') {
+                            return child;
+                        }
+
+                        // 子要素がさらに子要素を持っている場合、再帰的に検索
+                        const result = findOverflowYAutoElement(child);
+                        if (result) {
+                            return result;
+                        }
                     }
 
-                    const style = window.getComputedStyle(element);
-                    const overflowRegex = /(auto|scroll)/;
-                    const overflow = style.getPropertyValue('overflow') + style.getPropertyValue('overflow-y') + style.getPropertyValue('overflow-x');
-
-                    if (overflowRegex.test(overflow)) {
-                      return element;
-                    }
-
-                    element = element.parentElement;
-                  }
-
-                  return document.scrollingElement || document.documentElement;
+                    // 見つからなかった場合はnullを返す
+                    return null;
                 }
 
 
@@ -127,16 +131,17 @@ namespace AI_Prompt_Editor.ViewModels
 	                        top: 7px;
 	                        right: 57px;
 	                        background: #3a3b47;
-                            color: #dcdcdc;
 	                        border-radius: 6px;
 	                        border-width: 1px;
 	                        border: #545563 solid;
 	                        padding: 0px 15px 0px 15px;
+                            color: #fff;
 	                        display: none;
 	                        outline: none;
 	                        transition: opacity 0.6s;
 	                        font-size: 0.9em;
                             z-index: 10000;
+                            box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1), 0.3em 0.3em 1em rgba(0,0,0,0.3);
                           }
                         `;
 
@@ -148,7 +153,6 @@ namespace AI_Prompt_Editor.ViewModels
                 searchText(keyword, searchForward);
 
                 function searchText(keyword, searchForward, resetSearchIndex = false) {
-                    debugger;
                   // 検索キーワードを小文字に変換
                   keyword = keyword.toLowerCase();
 
@@ -159,9 +163,12 @@ namespace AI_Prompt_Editor.ViewModels
                     firstSearch = true;
                   }
 
-                  // ページ内のテキスト要素を取得
+                  // ページ内のmainタグ要素を取得
+                  const mainElement = document.querySelector('main');
+
+                  // mainタグ以下のテキスト要素を取得
                   const textNodes = [];
-                  const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+                  const walk = document.createTreeWalker(mainElement, NodeFilter.SHOW_TEXT, null, false);
                   let node;
                   while (node = walk.nextNode()) {
                     textNodes.push(node);
@@ -227,7 +234,7 @@ namespace AI_Prompt_Editor.ViewModels
 
                   // 選択したテキストまでスクロール
                   const rect = range.getBoundingClientRect();
-                  const scrollParent = getScrollParent(selectedResult.node);
+                  const scrollParent = findOverflowYAutoElement(mainElement);
                   if (scrollParent) {
                     const parentRect = scrollParent.getBoundingClientRect();
                     scrollParent.scrollTop += rect.top - parentRect.top - scrollParent.clientHeight / 2;
@@ -236,8 +243,6 @@ namespace AI_Prompt_Editor.ViewModels
                       top: rect.top + window.pageYOffset - window.innerHeight / 2
                     });
                   }
-
-                  console.log({ scrollParent });
 
                   const searchDisplay = document.getElementById(""searchDisplay"");
 
@@ -281,6 +286,11 @@ namespace AI_Prompt_Editor.ViewModels
             return;
         }
 
+        private void UpdateBrowser()
+        {
+            _browser?.Reload();
+        }
+
         // Browserインスタンスを受け取る
         public void SetBrowser(AvaloniaCefBrowser browser)
         {
@@ -290,6 +300,7 @@ namespace AI_Prompt_Editor.ViewModels
         public IAsyncRelayCommand SearchPrev { get; }
         public IAsyncRelayCommand SearchNext { get; }
         public IAsyncRelayCommand ImportWebChatLogCommand { get; }
+        public ICommand UpdateBrowserCommand { get; }
 
         private bool _webChatBardViewIsVisible;
         public bool WebChatBardViewIsVisible//ダイアログ表示用

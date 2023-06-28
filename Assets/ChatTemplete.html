@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Log</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
 <script>
 
 
@@ -163,12 +162,21 @@ function switchEdit(event) {
     }
 }
 
-function setupButtons() {
-    const copyButtons = document.querySelectorAll('#copyButton');
-    copyButtons.forEach(button => button.addEventListener('click', copyCode));
-    const editButtons = document.querySelectorAll('.editButton');
-    editButtons.forEach(button => button.addEventListener('click', switchEdit));
-}
+    // ストップボタン-----------------------------------
+    function stopGenerating(event) {
+        const button = event.target;
+        button.style.display = 'none';
+        window.open('https://StopGenerating', '_blank');
+    }
+
+    function setupButtons() {
+        const copyButton = document.querySelectorAll('#copyButton');
+        copyButton.forEach(button => button.addEventListener('click', copyCode));
+        const editButtons = document.querySelectorAll('.editButton');
+        editButtons.forEach(button => button.addEventListener('click', switchEdit));
+        const stopButton = document.querySelectorAll('#stopButton');
+        stopButton.forEach(button => button.addEventListener('click', stopGenerating));
+    }
 
 </script>
 
@@ -184,7 +192,11 @@ function setupButtons() {
 
     <div id="searchDisplay"></div>
 
+    <div id="floatingSystemMessageInfo"><div class="codeHeader3">System Message</div><div class="codeBody"></div></div>
+
     <button id="floatingCopyButton">Copy to clipboard</button>
+
+    <button id="stopButton">□ Stop generating</button>
 
 
 <script>
@@ -192,14 +204,16 @@ function setupButtons() {
 // ボタンハンドラ設定
 document.addEventListener('DOMContentLoaded', setupButtons);
 
-// highlight.js-----------------------------------
-  hljs.highlightAll();
 
 // 最下部スクロール-----------------------------------
 const scrollToBottomBtn = document.getElementById('scrollToBottomBtn');
 
 function isAtBottom() {
-	return window.innerHeight + window.scrollY >= document.body.scrollHeight;
+    return window.innerHeight + window.scrollY >= document.body.scrollHeight;
+}
+
+function isAtBottom5() {
+    return window.innerHeight + window.scrollY >= document.body.scrollHeight - 5;
 }
 
 function toggleButtonVisibility() {

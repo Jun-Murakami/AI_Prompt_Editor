@@ -13,6 +13,7 @@ using Avalonia.Interactivity;
 using HarfBuzzSharp;
 using System.Reflection;
 using System.Diagnostics;
+using Avalonia.Platform;
 
 namespace AI_Prompt_Editor.Views
 {
@@ -41,6 +42,7 @@ namespace AI_Prompt_Editor.Views
             browserWrapper.Child = _browser;
 
             _browser.LoadEnd += Browser_LoadEnd;
+            _browser.LoadStart += Browser_LoadStart;
             ChatViewModel.PropertyChanged += ViewModel_PropertyChanged;
             _browser.Focusable = false;
             ChatViewModel.SetBrowser(_browser);
@@ -52,6 +54,14 @@ namespace AI_Prompt_Editor.Views
             ChatViewModel.SetButtonWrite2(_button2);
 
             _searchBox = this.FindControl<TextBox>("SearchBox");
+        }
+
+        private async void Browser_LoadStart(object sender, LoadStartEventArgs e)
+        {
+            using var scriptStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/Assets/highlight.min.js")));
+            string scriptContent = await scriptStreamReader.ReadToEndAsync();
+            _browser.ExecuteJavaScript(scriptContent);
+            _browser.ExecuteJavaScript("hljs.highlightAll();");
         }
 
         private async void Browser_LoadEnd(object sender, LoadEndEventArgs e)
@@ -110,7 +120,7 @@ namespace AI_Prompt_Editor.Views
 
         private void FocusSearchBox(object sender, RoutedEventArgs e)
         {
-            if (VMLocator.MainViewModel.SelectedLeftPane == "Log Viewer")
+            if (VMLocator.MainViewModel.SelectedLeftPane == "API Chat")
             {
                 _searchBox.Focus();
             }

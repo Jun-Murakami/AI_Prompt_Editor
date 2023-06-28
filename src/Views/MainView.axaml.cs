@@ -66,16 +66,16 @@ namespace AI_Prompt_Editor.Views
         {
             switch ((sender as ListBox).SelectedIndex)
             {
+                case 2:
+                    _leftPane.Navigate(typeof(ChatView), null, new SuppressNavigationTransitionInfo());
+                    break;
+
                 case 0:
                     _leftPane.Navigate(typeof(WebChatView));
                     break;
 
                 case 1:
                     _leftPane.Navigate(typeof(WebChatBardView), null, new SuppressNavigationTransitionInfo());
-                    break;
-
-                case 2:
-                    _leftPane.Navigate(typeof(ChatView), null, new SuppressNavigationTransitionInfo());
                     break;
             }
         }

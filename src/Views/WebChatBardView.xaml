@@ -23,9 +23,9 @@
 				</Grid.ColumnDefinitions>
 				<Grid Grid.Column="0" VerticalAlignment="Center" Margin="5,0,0,0">
 					<ToggleButton Classes="ImageButton"
-								  ToolTip.Tip="Open / Close chat log"
+								  ToolTip.Tip="Open / Close chat list"
 								  VerticalAlignment="Center"
-								  IsChecked="{Binding Source={StaticResource VMLocator}, Path=MainViewModel.LogPainIsOpened,Mode=TwoWay}"
+								  IsChecked="{Binding Source={StaticResource VMLocator}, Path=MainViewModel.LogPainIsOpened}"
 								  IsVisible="{Binding Source={StaticResource VMLocator}, Path=MainViewModel.LogPainButtonIsVisible}">
 						<Image Classes="ButtonIcon"
 							   Source="/Assets/iconArrow.png"
@@ -50,6 +50,17 @@
 						   Margin="10,0,0,0"/>
 				</Grid>
 				<Grid Grid.Column="2">
+					<Button Command="{Binding UpdateBrowserCommand}"
+							Classes="ImageButton"
+							VerticalAlignment="Center"
+							Padding="4,0"
+							Margin="10,0,0,0">
+						<Image Classes="ButtonIcon"
+								Source="/Assets/iconUpdate.png"
+								Height="22"
+								Width="22"
+								VerticalAlignment="Center" />
+					</Button>
 				</Grid>
 				<Grid Grid.Column="3">
 					<TextBox Name="SearchBox"

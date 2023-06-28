@@ -7,7 +7,7 @@
              Padding="0, 10"
              x:Class="AI_Prompt_Editor.Views.HotKeyDisplayView">
     <StackPanel MinWidth="800">
-		<Image Source="/Assets/AI_Prompt_Editor_SC.png"
+		<Image Source="/Assets/TmcGPTD_SC.png"
 			   VerticalAlignment="Stretch"
 			   HorizontalAlignment="Stretch"
 			   Width="500"

@@ -4,9 +4,9 @@ using AI_Prompt_Editor.ViewModels;
 
 namespace AI_Prompt_Editor.Views
 {
-    public partial class Editor4TextBoxView : UserControl
+    public partial class Editor3_2TextBoxView : UserControl
     {
-        public Editor4TextBoxView()
+        public Editor3_2TextBoxView()
         {
             InitializeComponent();
         }

@@ -1201,14 +1201,30 @@ namespace AI_Prompt_Editor.Models
         // チャットログを更新--------------------------------------------------------------
         public async Task InsertDatabaseChatAsync(DateTime postDate, string postText, DateTime resDate, string resText)
         {
+            var insertText = new List<string>();
 
-            var insertText = new List<string>
+            if (!string.IsNullOrWhiteSpace(resText))
             {
-                $"[{postDate}] by You" + Environment.NewLine,
-                postText + Environment.NewLine,
-                $"[{resDate}] by AI",
-                resText
-            };
+                insertText = new List<string>
+                {
+                    $"[{postDate}] by You" + Environment.NewLine,
+                    postText + Environment.NewLine,
+                    "(!--editable--)" + Environment.NewLine,
+                    $"[{resDate}] by AI",
+                    resText
+                };
+            }
+            else
+            {
+                // AIの返答が空の場合(システムメッセージのみ)
+                insertText = new List<string>
+                {
+                    $"[{postDate}] by You" + Environment.NewLine,
+                    postText +
+                    "---" + Environment.NewLine,
+                    "(!--editable--)" + Environment.NewLine,
+                };
+            }
 
             var _editorViewModel = VMLocator.EditorViewModel;
             List<string> inputText = new()
@@ -1262,7 +1278,7 @@ namespace AI_Prompt_Editor.Models
                             }
                         }
 
-                        currentText = Regex.Replace(currentText, @"\r\n|\r|\n", Environment.NewLine);
+                        currentText = Regex.Replace(currentText, @"\r\n|\r|\n", Environment.NewLine).Trim() + Environment.NewLine + Environment.NewLine; ;
 
                         string searchText = $"(!--editable--){Environment.NewLine}";
                         string byYouText = "] by You";
@@ -1277,14 +1293,14 @@ namespace AI_Prompt_Editor.Models
                                 int lastByYouIndex = textBeforeEditable.LastIndexOf(byYouText);
                                 if (lastByYouIndex >= 0)
                                 {
-                                    int lastNewLineIndex = textBeforeEditable.LastIndexOf('\n', lastByYouIndex);
+                                    int lastNewLineIndex = textBeforeEditable.LastIndexOf(Environment.NewLine, lastByYouIndex);
                                     if (lastNewLineIndex >= 0)
                                     {
                                         currentText = textBeforeEditable.Substring(0, lastNewLineIndex).Trim();
                                     }
                                     else
                                     {
-                                        // lastByYouIndex以前に'\n'が存在しない場合は初回メッセージと判断
+                                        // lastByYouIndex以前に改行が存在しない場合は初回メッセージと判断
                                         currentText = "";
                                     }
                                 }
@@ -1305,9 +1321,8 @@ namespace AI_Prompt_Editor.Models
                         }
 
 
-
                         // 既存のテキストに新しいメッセージを追加する
-                        string newText = ( currentText + Environment.NewLine + string.Join(Environment.NewLine, insertText) ).Trim();
+                        string newText = ( currentText + Environment.NewLine + string.Join(Environment.NewLine, insertText) ).Trim() + Environment.NewLine + Environment.NewLine;
 
                         // 指定されたIDに対してデータを更新する
                         using (var command = new SQLiteCommand("UPDATE chatlog SET date=@date, title=@title, json=@json, text=@text, category=@category, lastprompt=@lastprompt, jsonprev=@jsonprev WHERE id=@id", connection))
@@ -1351,6 +1366,10 @@ namespace AI_Prompt_Editor.Models
                     }
                     // トランザクションをコミットする
                     await Task.Run(() => transaction.Commit());
+
+                    // 成功したら各種変数を更新する
+                    VMLocator.ChatViewModel.LastPrompt = promptTextForSave;
+                    VMLocator.ChatViewModel.ReEditIsOn = false;
                 }
                 catch (Exception)
                 {
