@@ -365,3 +365,6 @@ FodyWeavers.xsd
 /AI_Prompt_Editor.ico
 /Info.plist
 /Helper/LocalizationHelper.xlsm
+/supabaseConfig.json
+/build.sh
+/appsettings.json

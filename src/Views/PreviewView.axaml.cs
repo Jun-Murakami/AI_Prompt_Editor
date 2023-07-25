@@ -15,7 +15,7 @@ namespace AI_Prompt_Editor.Views
 
             this.AttachedToVisualTree += (sender, e) =>
             {
-                if (previewTextBox == null || VMLocator.EditorViewModel == null|| VMLocator.EditorViewModel.GetRecentText() == null) return;
+                if (previewTextBox == null || VMLocator.EditorViewModel == null || VMLocator.EditorViewModel.GetRecentText() == null) return;
                 previewTextBox.Text = VMLocator.EditorViewModel.GetRecentText();
             };
         }

@@ -4,6 +4,13 @@ It supports Windows 10 and later, as well as MacOS.
 
 ChatGPT、Google Bard用のプロンプトエディター＆クライアントアプリです。Windows10以降、MacOSに対応。
   
+## Version 1.5.0 の新機能
+
+- [Webアプリ版](https://tmcgptd.web.app/)を新規開発し、デスクトップ版のログをクラウドで同期できるようにしました。スマホでもログを閲覧できます。（クラウド機能／Webアプリ版を利用するには、ユーザー登録、またはGoogle/Microsoft/GitHubアカウントでのログインが必要です。）
+- Webアプリ版にAPIキーを設定すれば、ブラウザでもチャットが可能です。機能は最低限ですが、デスクトップ版と同じく古い会話履歴を自動的に圧縮して半永久的に会話が継続できる機能は実装しています。
+- バックエンドサービスのコストの関係で、登録ユーザー数を制限する場合があります。(ローカルで使う分には今までと変わらないので、クラウドサービスが終了してもデスクトップ版のログは消えません。)
+クラウド機能が不要な方は [ver 1.2.x](https://github.com/Jun-Murakami/AI_Prompt_Editor/releases/tag/v1.2.1) をご利用ください。
+
 ## 機能:  
 
 - **縦5分割のプロンプトエディタ**  
@@ -20,6 +27,14 @@ ChatGPTとBardのログをインポートできます。取り込んだ全ての
 > 複数のコンピューターでチャットログを同期するには、画面右上のデータベースアイコンをクリックして、データベースファイルの保存場所をクラウドドライブ（Dropboxなど）に設定してください。
 
 API対応バージョンは[こちら](https://github.com/Jun-Murakami/AI_Prompt_Editor-2.0)
+
+## New features in version 1.5.0 !
+
+- A new [web app](https://tmcgptd.web.app/) version has been developed to allow logs from the desktop version to be synchronized in the cloud. You can also view the logs on your smartphone. (To use the cloud function/web app version, user registration or login via Google/Microsoft/GitHub account is required.)
+- If you set an API key in the web app version, you can chat in the browser. The features are minimal, but like the desktop version, it compresses old conversation histories automatically, allowing semi-permanent continuation of conversations.
+- We may limit the number of registered users because of the cost of using the backend service.
+(The logs of the desktop version will not be lost even if the cloud service is terminated, since it is still the same as before for local use.)
+If you do not need the cloud function, please use [ver 1.2.x](https://github.com/Jun-Murakami/AI_Prompt_Editor/releases/tag/v1.2.1).
 
 ## Features:  
   

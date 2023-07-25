@@ -1,7 +1,6 @@
 ﻿<Styles
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:AvalonEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
     xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
     xmlns:ui="using:FluentAvalonia.UI.Controls"
     xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives">
@@ -17,14 +16,14 @@
             <Setter Property="Background" Value="rgb(52, 53, 65)" />
         </Style>
         <Style Selector="TextBlock">
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/Lato-Regular.ttf#Lato" />
+            <Setter Property="FontFamily" Value="avares://AI_Prompt_Editor/Assets/Lato-Regular.ttf#Lato" />
             <Setter Property="Foreground" Value="rgb(220, 220, 220)" />
         </Style>
         <Style Selector="TextBlock#Title">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Height" Value="18" />
             <Setter Property="Margin" Value="0,5,15,5" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
+            <Setter Property="FontFamily" Value="avares://AI_Prompt_Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
         </Style>
         <Style Selector="TextBlock#PART_Watermark">
             <Setter Property="Opacity" Value="0.4" />
@@ -40,7 +39,7 @@
             <Setter Property="Height" Value="32" />
             <Setter Property="CornerRadius" Value="6" />
             <Setter Property="Margin" Value="0" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/Lato-Regular.ttf#Lato" />
+            <Setter Property="FontFamily" Value="avares://AI_Prompt_Editor/Assets/Lato-Regular.ttf#Lato" />
             <Setter Property="Transitions">
                 <Transitions>
                     <BrushTransition Property="Background" Duration="0:0:0.2" />
@@ -50,18 +49,31 @@
         <Style Selector="Grid Button:pointerover">
             <Setter Property="Background" Value="rgb(84, 85, 99)" />
             <Setter Property="BorderBrush" Value="rgb(106, 108, 125)" />
+			<Setter Property="CornerRadius" Value="6" />
         </Style>
+		<Style Selector="Grid Button:pressed">
+			<Setter Property="Background" Value="rgb(84, 85, 99)" />
+			<Setter Property="BorderBrush" Value="rgb(106, 108, 125)" />
+			<Setter Property="CornerRadius" Value="6" />
+		</Style>
         <Style Selector="Grid Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Background" Value="rgb(84, 85, 99)" />
             <Setter Property="BorderBrush" Value="rgb(106, 108, 125)" />
+			<Setter Property="CornerRadius" Value="6" />
         </Style>
+		<Style Selector="Grid Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="rgb(84, 85, 99)" />
+			<Setter Property="BorderBrush" Value="rgb(106, 108, 125)" />
+			<Setter Property="CornerRadius" Value="6" />
+		</Style>
 
         <Style Selector="Grid Button.Post:disabled /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Background" Value="rgb(100, 90, 165)" />
+			<Setter Property="CornerRadius" Value="6" />
         </Style>
 
         <Style Selector="Grid#PhrasePresets Button">
-            <Setter Property="Width" Value="40" />
+            <Setter Property="Width" Value="42" />
             <Setter Property="Margin" Value="0,2,2,2" />
             <Setter Property="Transitions">
                 <Transitions>
@@ -137,12 +149,6 @@
             <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
         </Style>
 
-        <Style Selector="AvalonEdit|TextEditor">
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="Background" Value="rgb(42, 43, 55)" />
-            <Setter Property="Padding" Value="5" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
-        </Style>
         <Style Selector="ListBox,ListBoxItem,ListBoxItem:selected">
             <Setter Property="Height" Value="36" />
             <Setter Property="MinHeight" Value="36" />
@@ -150,7 +156,7 @@
         <Style Selector="ListBox TextBlock,ListBoxItem TextBlock,ListBoxItem:selected TextBlock">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Height" Value="20" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
+            <Setter Property="FontFamily" Value="avares://AI_Prompt_Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
         </Style>
         <Style Selector="ListBoxItem /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Height" Value="30" />
@@ -167,7 +173,7 @@
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="LineHeight" Value="20" />
             <Setter Property="Margin" Value="0" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
+            <Setter Property="FontFamily" Value="avares://AI_Prompt_Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
         </Style>
         <Style Selector="Grid#EditorGrid TextBox:focus">
             <Setter Property="Foreground" Value="rgb(220, 220, 220)" />
@@ -220,7 +226,7 @@
             <Setter Property="Margin" Value="2,0" />
             <Setter Property="Padding" Value="7" />
             <Setter Property="Height" Value="23" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
+            <Setter Property="FontFamily" Value="avares://AI_Prompt_Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
         </Style>
         <Style Selector="TextBox.NormalInput:focus">
             <Setter Property="Foreground" Value="rgb(255, 255, 255)" />
@@ -239,7 +245,7 @@
             <Setter Property="Margin" Value="2,0,8,0" />
             <Setter Property="Padding" Value="8" />
             <Setter Property="Height" Value="23" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
+            <Setter Property="FontFamily" Value="avares://AI_Prompt_Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
             <Setter Property="Transitions">
                 <Transitions>
                     <BrushTransition Property="Background" Duration="0:0:0.05" />
@@ -265,7 +271,7 @@
         </Style>
         <Style Selector="Grid#DialogSpace TextBlock">
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
+            <Setter Property="FontFamily" Value="avares://AI_Prompt_Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
         </Style>
 
         <Style Selector="ToggleSwitch TextBlock">
@@ -277,7 +283,7 @@
         <Style Selector="ToggleSwitch">
             <Setter Property="Margin" Value="8,0,0,5" />
             <Setter Property="MinWidth" Value="5" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/Lato-Regular.ttf#Lato" />
+            <Setter Property="FontFamily" Value="avares://AI_Prompt_Editor/Assets/Lato-Regular.ttf#Lato" />
         </Style>
         <Style Selector="ToggleSwitch TextBlock">
             <Setter Property="FontSize" Value="12" />
@@ -292,7 +298,7 @@
             <Setter Property="Background" Value="rgb(52, 53, 65)" />
             <Setter Property="BorderBrush" Value="rgb(94, 95, 109)" />
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/Lato-Regular.ttf#Lato" />
+            <Setter Property="FontFamily" Value="avares://AI_Prompt_Editor/Assets/Lato-Regular.ttf#Lato" />
             <Setter Property="CornerRadius" Value="6" />
         </Style>
         <Style Selector="ComboBoxItem">
@@ -318,7 +324,7 @@
         <Style Selector="DataGrid TextBlock">
             <Setter Property="Margin" Value="0,14,10,14" />
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontFamily" Value="avares://AI Prompt Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
+            <Setter Property="FontFamily" Value="avares://AI_Prompt_Editor/Assets/migu-1m-regular.ttf#Migu 1M" />
         </Style>
 
         <Style Selector="Grid#ApiSettings TextBlock">
@@ -409,6 +415,25 @@
                 </Animation>
             </Style.Animations>
         </Style>
+
+		<Style Selector="TextBlock.FadeOut">
+			<Style.Animations>
+				<Animation Duration="0:0:6">
+					<KeyFrame Cue="0%">
+						<Setter Property="Opacity" Value="0.0" />
+					</KeyFrame>
+					<KeyFrame Cue="10%">
+						<Setter Property="Opacity" Value="1.0" />
+					</KeyFrame>
+					<KeyFrame Cue="80%">
+						<Setter Property="Opacity" Value="1.0" />
+					</KeyFrame>
+					<KeyFrame Cue="100%">
+						<Setter Property="Opacity" Value="0.0" />
+					</KeyFrame>
+				</Animation>
+			</Style.Animations>
+		</Style>
 
     </Styles>
 </Styles>

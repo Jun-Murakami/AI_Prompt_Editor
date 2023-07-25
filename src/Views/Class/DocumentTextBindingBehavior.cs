@@ -9,7 +9,7 @@ namespace AI_Prompt_Editor.Behaviors
 {
     public class DocumentTextBindingBehavior : Behavior<TextEditor>
     {
-        private TextEditor _textEditor = null;
+        private TextEditor? _textEditor = null;
 
         public static readonly StyledProperty<string> TextProperty =
             AvaloniaProperty.Register<DocumentTextBindingBehavior, string>(nameof(Text));
@@ -42,7 +42,7 @@ namespace AI_Prompt_Editor.Behaviors
             }
         }
 
-        private void TextChanged(object sender, EventArgs eventArgs)
+        private void TextChanged(object? sender, EventArgs eventArgs)
         {
             if (_textEditor != null && _textEditor.Document != null)
             {
