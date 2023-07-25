@@ -212,6 +212,16 @@
                                    IsVisible="{Binding CloudIconSelector, Converter={StaticResource InverseBooleanConverter}, Mode=OneWay}" />
 						</Panel>
 					</Button>
+					<Button ToolTip.Tip="Option settings"
+		                    HorizontalAlignment="Right"
+		                    VerticalAlignment="Center"
+		                    BorderThickness="0"
+		                    Width="28"
+		                    Height="28"
+		                    Command="{Binding OpenOptionSettingsCommand}">
+						<Image Source="/Assets/iconSetting.png"
+                               VerticalAlignment="Center" />
+					</Button>
                 </Grid>
                 <Border Grid.Row="1"
                         Grid.Column="2"
