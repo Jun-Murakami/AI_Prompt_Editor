@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
 using System;
 using System.Diagnostics;
 using AI_Prompt_Editor.ViewModels;
@@ -122,6 +123,11 @@ namespace AI_Prompt_Editor.Views
                 }
 #endif
             }
+        }
+
+        private void InitializeComponent()
+        {
+            AvaloniaXamlLoader.Load(this);
         }
     }
 }

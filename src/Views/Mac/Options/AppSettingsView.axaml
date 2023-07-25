@@ -5,7 +5,7 @@
              mc:Ignorable="d"
              d:DesignWidth="650"
              d:DesignHeight="450"
-             x:Class="TmCGPTD.Views.AppSettingsView">
+             x:Class="AI_Prompt_Editor.Views.AppSettingsView">
     <Panel HorizontalAlignment="Stretch"
            MinWidth="650"
            MinHeight="439">
