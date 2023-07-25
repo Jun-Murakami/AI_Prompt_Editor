@@ -306,9 +306,9 @@ namespace AI_Prompt_Editor.Views
             //  "Iv": "IV"
             //}
 #if WINDOWS
-            using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/appsettings.json")));
+            using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/appsettings.json")));
 #else
-            using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/appsettings.json")));
+            using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/appsettings.json")));
 #endif
             string aesJson = await streamReader.ReadToEndAsync();
 

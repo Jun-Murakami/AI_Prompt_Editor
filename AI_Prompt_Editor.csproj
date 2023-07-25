@@ -11,7 +11,7 @@
         <NSHighResolutionCapable>true</NSHighResolutionCapable>
         <Configurations>Debug;Release;Debug64</Configurations>
         <Platforms>AnyCPU;x64</Platforms>
-        <AssemblyName>AI_Prompt_Editor</AssemblyName>
+        <AssemblyName>AI Prompt Editor</AssemblyName>
         <RootNameSpace>AI_Prompt_Editor</RootNameSpace>
     </PropertyGroup>
 	

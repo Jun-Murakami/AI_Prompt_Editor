@@ -23,9 +23,9 @@ namespace AI_Prompt_Editor.ViewModels
         private async void LicenseLoad()
         {
 #if WINDOWS
-            using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/Assets/License.txt")));
+            using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/Assets/License.txt")));
 #else
-            using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/Assets/License.txt")));
+            using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/Assets/License.txt")));
 #endif
             LicenseText = await streamReader.ReadToEndAsync();
         }

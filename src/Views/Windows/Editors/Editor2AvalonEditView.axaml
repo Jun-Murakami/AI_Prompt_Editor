@@ -8,7 +8,7 @@
              xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
              xmlns:views="clr-namespace:AI_Prompt_Editor.Views"
              xmlns:AvalonEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
-             xmlns:behaviors="clr-namespace:AI_Prompt_Editor.Behaviors;assembly=AI_Prompt_Editor"
+             xmlns:behaviors="clr-namespace:AI_Prompt_Editor.Behaviors;assembly=AI Prompt Editor"
              x:Class="AI_Prompt_Editor.Views.Editor2AvalonEditView">
     <Panel>
         <AvalonEdit:TextEditor VerticalAlignment="Stretch"

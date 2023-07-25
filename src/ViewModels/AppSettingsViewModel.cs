@@ -216,7 +216,7 @@ namespace AI_Prompt_Editor.ViewModels
 
             App.Current.Resources.MergedDictionaries.Add(
                 (ResourceDictionary)AvaloniaXamlLoader.Load(
-                    new Uri($"avares://AI_Prompt_Editor/Assets/Lang/{targetLanguage}.axaml")
+                    new Uri($"avares://AI Prompt Editor/Assets/Lang/{targetLanguage}.axaml")
                     )
                 );
         }

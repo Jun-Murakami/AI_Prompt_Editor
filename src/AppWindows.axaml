@@ -19,10 +19,10 @@
     <Application.Styles>
         <sty:FluentAvaloniaTheme PreferUserAccentColor="False"
                                  PreferSystemTheme="False" />
-        <StyleInclude Source="avares://AI_Prompt_Editor/Assets/CustomDataGridStyles.axaml" />
+        <StyleInclude Source="avares://AI Prompt Editor/Assets/CustomDataGridStyles.axaml" />
         <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
-        <StyleInclude Source="avares://AI_Prompt_Editor/Assets/Styles.axaml" />
-        <StyleInclude Source="avares://AI_Prompt_Editor/Assets/StylesWindows.axaml" />
+        <StyleInclude Source="avares://AI Prompt Editor/Assets/Styles.axaml" />
+        <StyleInclude Source="avares://AI Prompt Editor/Assets/StylesWindows.axaml" />
         <dialogHostAvalonia:DialogHostStyles />
     </Application.Styles>
     <Application.Resources>

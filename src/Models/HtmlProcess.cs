@@ -20,13 +20,13 @@ namespace AI_Prompt_Editor.Models
         public async Task<string> InitializeChatLogToHtml()
         {
 #if WINDOWS
-            using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/Assets/ChatTempleteLogo.html")));
-            using var chatCssStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/Assets/ChatStyles.css")));
-            using var cssStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/Assets/vs2015.min.css")));
+            using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/Assets/ChatTempleteLogo.html")));
+            using var chatCssStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/Assets/ChatStyles.css")));
+            using var cssStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/Assets/vs2015.min.css")));
 #else
-            using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/Assets/ChatTempleteLogo.html")));
-            using var chatCssStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/Assets/ChatStyles.css")));
-            using var cssStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/Assets/vs2015.min.css")));
+            using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/Assets/ChatTempleteLogo.html")));
+            using var chatCssStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/Assets/ChatStyles.css")));
+            using var cssStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/Assets/vs2015.min.css")));
 #endif
 
 
@@ -51,11 +51,11 @@ namespace AI_Prompt_Editor.Models
         public async Task<string> InitializeLogInToHtml()
         {
 #if WINDOWS
-            using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/Assets/LogInTemplete.html")));
-            using var chatCssStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/Assets/ChatStyles.css")));
+            using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/Assets/LogInTemplete.html")));
+            using var chatCssStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/Assets/ChatStyles.css")));
 #else
-            using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/Assets/LogInTemplete.html")));
-            using var chatCssStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/Assets/ChatStyles.css")));
+            using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/Assets/LogInTemplete.html")));
+            using var chatCssStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/Assets/ChatStyles.css")));
 #endif
 
             string chatCssContent = await chatCssStreamReader.ReadToEndAsync();
@@ -76,13 +76,13 @@ namespace AI_Prompt_Editor.Models
         {
             plainTextChatLog = Regex.Replace(plainTextChatLog, @"\r\n|\r|\n", Environment.NewLine);
 #if WINDOWS
-            using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/Assets/ChatTemplete.html")));
-            using var chatCssStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/Assets/ChatStyles.css")));
-            using var cssStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/Assets/vs2015.min.css")));
+            using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/Assets/ChatTemplete.html")));
+            using var chatCssStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/Assets/ChatStyles.css")));
+            using var cssStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/Assets/vs2015.min.css")));
 #else
-            using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/Assets/ChatTemplete.html")));
-            using var chatCssStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/Assets/ChatStyles.css")));
-            using var cssStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/Assets/vs2015.min.css")));
+            using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/Assets/ChatTemplete.html")));
+            using var chatCssStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/Assets/ChatStyles.css")));
+            using var cssStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/Assets/vs2015.min.css")));
 #endif
 
             string chatCssContent = await chatCssStreamReader.ReadToEndAsync();

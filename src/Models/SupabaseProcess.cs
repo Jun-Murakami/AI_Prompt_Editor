@@ -39,9 +39,9 @@ namespace AI_Prompt_Editor.Models
             try
             {
 #if WINDOWS
-                using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/supabaseConfig.json")));
+                using var streamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/supabaseConfig.json")));
 #else
-                using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/supabaseConfig.json")));
+                using var streamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/supabaseConfig.json")));
 #endif
                 string jsonString = await streamReader.ReadToEndAsync();
 

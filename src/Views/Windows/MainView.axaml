@@ -31,7 +31,7 @@
                    Margin="0,0,5,3"
                    Name="WindowIcon"
                    IsHitTestVisible="False" />
-            <TextBlock Text="TmCGPT Debugger"
+            <TextBlock Text="AI Prompt Editor"
                        Name="Title"
                        IsHitTestVisible="False" />
         </StackPanel>

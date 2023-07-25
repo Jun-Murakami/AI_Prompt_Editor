@@ -60,9 +60,9 @@ namespace AI_Prompt_Editor.Views
         private async void Browser_LoadStart(object sender, LoadStartEventArgs e)
         {
 #if WINDOWS
-            using var scriptStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI_Prompt_Editor/Assets/highlight.min.js")));
+            using var scriptStreamReader = new StreamReader(AssetLoader.Open(new Uri("avares://AI Prompt Editor/Assets/highlight.min.js")));
 #else
-            using var scriptStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI_Prompt_Editor/Assets/highlight.min.js")));
+            using var scriptStreamReader = new StreamReader(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri("avares://AI Prompt Editor/Assets/highlight.min.js")));
 #endif
             string scriptContent = await scriptStreamReader.ReadToEndAsync();
             _browser.ExecuteJavaScript(scriptContent);
