@@ -1401,7 +1401,6 @@ namespace AI_Prompt_Editor.Models
         }
 
         // データベースにEditorlogをインサートする--------------------------------------------------------------
-        // 同期チェックは省略する
         public async Task InserEditorLogDatabasetAsync()
         {
             var _editorViewModel = VMLocator.EditorViewModel;
@@ -1464,8 +1463,8 @@ namespace AI_Prompt_Editor.Models
                 throw;
             }
             // インメモリをいったん閉じてまた開く
-            //await memoryConnection!.CloseAsync();
-            //await DbLoadToMemoryAsync();
+            await memoryConnection!.CloseAsync();
+            await DbLoadToMemoryAsync();
         }
 
         // データベースからEditorログリストを取得--------------------------------------------------------------
@@ -1577,6 +1576,9 @@ namespace AI_Prompt_Editor.Models
                 }
             }
             await connection.CloseAsync();
+            // インメモリをいったん閉じてまた開く
+            await memoryConnection!.CloseAsync();
+            await DbLoadToMemoryAsync();
         }
 
         // チャットログを更新--------------------------------------------------------------
